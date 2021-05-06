@@ -1,0 +1,33 @@
+@using System.Reflection
+@using Microsoft.AspNetCore.Components.WebAssembly.Services
+@inject LazyAssemblyLoader AssemblyLoader
+
+<Router AppAssembly="@typeof(Program).Assembly"
+        OnNavigateAsync="OnNavigateAsync"
+        AdditionalAssemblies="_lazyLoadedAssemblies">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+    </Found>
+    <NotFound>
+        <LayoutView Layout="@typeof(MainLayout)">
+            <p>Sorry, there's nothing at this address.</p>
+        </LayoutView>
+    </NotFound>
+</Router>
+
+@code
+{
+    private List<Assembly> _lazyLoadedAssemblies = new List<Assembly>();
+    private IEnumerable<Assembly> _assemblies = null;
+
+    private async Task OnNavigateAsync(NavigationContext context)
+    {
+        var targetPath = context.Path;
+
+        if (targetPath == "clients" || targetPath == "clients/add")
+        {
+            _assemblies = await AssemblyLoader.LoadAssembliesAsync(new[] { "LEXEnprise.Blazor.Clients.dll" });
+            _lazyLoadedAssemblies.AddRange(_assemblies);
+        }
+    }
+}

@@ -1,0 +1,16 @@
+﻿<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            @ChildContent
+        </div>
+    </div>
+</section>
+<!-- /.content -->
+
+@code {
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+}

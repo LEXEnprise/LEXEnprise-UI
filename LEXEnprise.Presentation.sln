@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blazor", "Blazor", "{95BF93E6-C3B8-43D2-A355-4229B141A8D8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LEXEnprise.Blazor", "LEXEnprise.Blazor\LEXEnprise.Blazor.csproj", "{EE7BB01A-AC36-4565-B5C9-53C7D90BCBC8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LEXEnprise.Blazor.Shared", "LEXEnprise.Blazor.Shared\LEXEnprise.Blazor.Shared.csproj", "{94BD0C20-7147-4C4B-9793-FAC9D3D0646F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{BF8EC90D-A9BA-416B-8B30-3956BFC93582}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LEXEnprise.Blazor.Clients", "LEXEnprise.Blazor.Client\LEXEnprise.Blazor.Clients.csproj", "{5988D77F-AAEE-47D4-8CF7-AA48FAE60380}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LEXEnprise.Blazor.Matters", "LEXEnprise.Blazor.Matters\LEXEnprise.Blazor.Matters.csproj", "{11F9D5A7-141F-4ED6-93AB-604C4FA57ED4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EE7BB01A-AC36-4565-B5C9-53C7D90BCBC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE7BB01A-AC36-4565-B5C9-53C7D90BCBC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE7BB01A-AC36-4565-B5C9-53C7D90BCBC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE7BB01A-AC36-4565-B5C9-53C7D90BCBC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94BD0C20-7147-4C4B-9793-FAC9D3D0646F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94BD0C20-7147-4C4B-9793-FAC9D3D0646F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94BD0C20-7147-4C4B-9793-FAC9D3D0646F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94BD0C20-7147-4C4B-9793-FAC9D3D0646F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5988D77F-AAEE-47D4-8CF7-AA48FAE60380}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5988D77F-AAEE-47D4-8CF7-AA48FAE60380}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5988D77F-AAEE-47D4-8CF7-AA48FAE60380}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5988D77F-AAEE-47D4-8CF7-AA48FAE60380}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11F9D5A7-141F-4ED6-93AB-604C4FA57ED4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11F9D5A7-141F-4ED6-93AB-604C4FA57ED4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11F9D5A7-141F-4ED6-93AB-604C4FA57ED4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11F9D5A7-141F-4ED6-93AB-604C4FA57ED4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EE7BB01A-AC36-4565-B5C9-53C7D90BCBC8} = {95BF93E6-C3B8-43D2-A355-4229B141A8D8}
+		{94BD0C20-7147-4C4B-9793-FAC9D3D0646F} = {95BF93E6-C3B8-43D2-A355-4229B141A8D8}
+		{BF8EC90D-A9BA-416B-8B30-3956BFC93582} = {95BF93E6-C3B8-43D2-A355-4229B141A8D8}
+		{5988D77F-AAEE-47D4-8CF7-AA48FAE60380} = {BF8EC90D-A9BA-416B-8B30-3956BFC93582}
+		{11F9D5A7-141F-4ED6-93AB-604C4FA57ED4} = {BF8EC90D-A9BA-416B-8B30-3956BFC93582}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2D7F57CB-1455-4B17-835B-67F078A3481C}
+	EndGlobalSection
+EndGlobal
