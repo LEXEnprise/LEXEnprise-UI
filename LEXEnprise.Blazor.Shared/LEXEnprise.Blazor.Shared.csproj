@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Constants\" />
+    <Folder Include="Components\Dialogs\" />
   </ItemGroup>
 
 </Project>

@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\Authentication\Login.razor" />
     <Content Remove="wwwroot\css\app.css" />
     <Content Remove="wwwroot\js\adminlte\demo.js" />
   </ItemGroup>
@@ -38,12 +39,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Pages\Authentication\Login.razor" />
     <None Include="wwwroot\js\adminlte\pages\dashboard.js" />
     <None Include="wwwroot\js\adminlte\pages\dashboard2.js" />
     <None Include="wwwroot\js\adminlte\pages\dashboard3.js" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\LEXEnprise.Blazor.Application\LEXEnprise.Blazor.Application.csproj" />
     <ProjectReference Include="..\LEXEnprise.Blazor.Client\LEXEnprise.Blazor.Clients.csproj" />
     <ProjectReference Include="..\LEXEnprise.Blazor.Shared\LEXEnprise.Blazor.Shared.csproj" />
   </ItemGroup>
@@ -52,6 +55,14 @@
     <Content Update="wwwroot\appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Authentication\Login.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\Authentication\Login.razor" />
   </ItemGroup>
 
 </Project>

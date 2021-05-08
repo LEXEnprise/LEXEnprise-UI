@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LEXEnprise.Blazor.Shared.Services.Authentication
+namespace LEXEnprise.Blazor.Application.Services
 {
-    public class AuthenticationService
+    public interface IService
     {
     }
 }

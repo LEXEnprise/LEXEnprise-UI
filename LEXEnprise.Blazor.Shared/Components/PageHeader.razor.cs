@@ -6,5 +6,8 @@ namespace LEXEnprise.Blazor.Shared.Components
     {
         [Parameter]
         public string PageTitle { get; set; }
+
+        [Parameter]
+        public string BreadCrumbTitle { get; set; }
     }
 }
