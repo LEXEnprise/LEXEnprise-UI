@@ -1,13 +1,33 @@
 ﻿@inherits LayoutComponentBase
+@inject IAccountService AccountService
 @using LEXEnprise.Blazor.Shared
 
-<NavMenu />
-<TopBar />
+
+@if (IsLoggedIn)
+{
+    <NavMenu />
+    <TopBar />
+}
+
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     @Body
 </div>
 
-<Footer />
+@if (IsLoggedIn)
+{
+    <Footer />
+}
 
+@code
+{
+    public bool IsLoggedIn
+    {
+        get
+        {
+            return AccountService.User != null;
+        }
+
+    }
+}

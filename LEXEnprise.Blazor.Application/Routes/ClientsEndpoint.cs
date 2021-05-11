@@ -11,7 +11,13 @@ namespace LEXEnprise.Blazor.Application.Routes
         public static string GetPaged(int pageNumber, int pageSize,
             string searchString, string sortString)
         {
-            return $"clients?pageNumber={pageNumber}&pageSize={pageSize}&searchString={searchString}&sortString={sortString}";
+            //return $"clients?pageNumber={pageNumber}&pageSize={pageSize}&searchString={searchString}&sortString={sortString}";
+            
+            //NOTE: These parameters required default values.
+            searchString = searchString ?? "*";
+            sortString = sortString ?? "ClientName";
+
+            return $"clients-service/clients/{pageNumber}/{pageSize}/{searchString}/{sortString}";
         }
 
         public static string Add = "clients/add";

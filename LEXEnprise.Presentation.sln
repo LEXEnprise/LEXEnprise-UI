@@ -15,9 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LEXEnprise.Blazor.Clients",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LEXEnprise.Blazor.Matters", "LEXEnprise.Blazor.Matters\LEXEnprise.Blazor.Matters.csproj", "{11F9D5A7-141F-4ED6-93AB-604C4FA57ED4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LEXEnprise.Blazor.Infrastructure", "LEXEnprise.Blazor.Infrastructure\LEXEnprise.Blazor.Infrastructure.csproj", "{3CDAB652-D39B-47A0-9C96-FA82057894F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LEXEnprise.Blazor.Infrastructure", "LEXEnprise.Blazor.Infrastructure\LEXEnprise.Blazor.Infrastructure.csproj", "{3CDAB652-D39B-47A0-9C96-FA82057894F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LEXEnprise.Blazor.Application", "LEXEnprise.Blazor.Application\LEXEnprise.Blazor.Application.csproj", "{EEE4ACEB-2D9D-474B-AB2C-1DADB8F78358}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LEXEnprise.Blazor.Application", "LEXEnprise.Blazor.Application\LEXEnprise.Blazor.Application.csproj", "{EEE4ACEB-2D9D-474B-AB2C-1DADB8F78358}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
