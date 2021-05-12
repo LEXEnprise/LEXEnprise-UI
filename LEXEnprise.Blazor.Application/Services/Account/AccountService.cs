@@ -75,8 +75,8 @@ namespace LEXEnprise.Blazor.Application.Services.Account
 
                     //Place token to httprequest.
                     //NOTE: This should be later uncommented out.
-                    //_httpClient.DefaultRequestHeaders.Authorization =
-                    //    new AuthenticationHeaderValue("Bearer", result.Data.Token);
+                    _httpClient.DefaultRequestHeaders.Authorization =
+                        new AuthenticationHeaderValue("Bearer", result.Data.Token);
 
                 }
                 catch (Exception ex)

@@ -25,7 +25,7 @@ namespace LEXEnprise.Blazor
             var host = builder.Build();
             var accountService = host.Services.GetRequiredService<IAccountService>();
 
-            accountService.Initialize();
+            await accountService.Initialize();
             await host.RunAsync();
         }
     }

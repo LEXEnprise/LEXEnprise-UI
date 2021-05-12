@@ -1,9 +1,7 @@
 ﻿@page "/clients"
 @using LEXEnprise.Blazor.Shared.Components
 @using LEXEnprise.Blazor.Clients.Components
-
-@*@using Microsoft.Extensions.Configuration
-    @inject IConfiguration Configuration*@
+@attribute [Authorize(Roles ="MISStaff,Lawyer")]
 
 <PageHeader PageTitle=@PageTitle BreadCrumbTitle="@BreadCrumbTitle" />
 <MainContent>
