@@ -1,4 +1,5 @@
 ﻿using Blazored.LocalStorage;
+using LEXEnprise.Blazor.Application.Models.Account;
 using LEXEnprise.Blazor.Infrastructure.Helpers;
 using Microsoft.AspNetCore.Components.Authorization;
 using System;
@@ -15,10 +16,10 @@ namespace LEXEnprise.Blazor.Application.Authentication
     public class AuthStateProvider : AuthenticationStateProvider
     {
         private readonly HttpClient _httpClient;
-        private readonly ILocalStorageService _localStorage;
+        private readonly ILocalStorageHelper _localStorage;
         private readonly AuthenticationState _anonymous;
 
-        public AuthStateProvider(HttpClient httpClient, ILocalStorageService localStorage)
+        public AuthStateProvider(HttpClient httpClient, ILocalStorageHelper localStorage)
         {
             _httpClient = httpClient;
             _localStorage = localStorage;
@@ -29,10 +30,16 @@ namespace LEXEnprise.Blazor.Application.Authentication
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             //Get token from local storages.
-            var token = await _localStorage.GetItemAsync<string>("authToken");
+            var secTokens = await _localStorage.GetItemAsync<SecTokens>("SecTokensKey");
+
+            if (secTokens == null)
+                return _anonymous;
+
+            var token = secTokens.Token;
+
             //if not in local storage, return anonymous.
             if (string.IsNullOrWhiteSpace(token))
-                return _anonymous;
+                
 
             //set the default authorization header for the HttpClient using the token got from local storage, and return authenticated user – 
             //the ClaimsIdentity constructor is populated with the parsed claims and the authentication type parameters.

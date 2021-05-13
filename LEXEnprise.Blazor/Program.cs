@@ -20,8 +20,9 @@ namespace LEXEnprise.Blazor
 
             builder
                 .AddRootComponents()
+                .AddServiceHelpers()
                 .AddClientServices(builder.Configuration);
-
+                
             var host = builder.Build();
             var accountService = host.Services.GetRequiredService<IAccountService>();
 

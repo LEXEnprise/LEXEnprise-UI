@@ -7,25 +7,13 @@
     <!-- Brand Logo -->
     <a href="/" class="brand-link">
         <img src="img/AdminLTELogo.png" alt="LEXEnprise Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">@Configuration["AppName"]</span>
+        <span class="brand-text font-weight-light">@Configuration["AppSettings:AppName"]</span>
     </a>
 
     <!-- Sidebar -->
     <div class="sidebar">
         <!-- Sidebar user (optional) -->
         <UserInfo UserName="@UserName" UserImage="@UserImage" />
-
-        <!-- SidebarSearch Form -->
-        <div class="form-inline">
-            <div class="input-group" data-widget="sidebar-search">
-                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-                <div class="input-group-append">
-                    <button class="btn btn-sidebar">
-                        <i class="fas fa-search fa-fw"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">

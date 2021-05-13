@@ -10,6 +10,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Toolbelt.Blazor.HttpClientInterceptor" Version="9.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\LEXEnprise.Blazor.Infrastructure\LEXEnprise.Blazor.Infrastructure.csproj" />
     <ProjectReference Include="..\LEXEnprise.Blazor.Shared\LEXEnprise.Blazor.Shared.csproj" />
   </ItemGroup>

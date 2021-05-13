@@ -14,5 +14,6 @@ namespace LEXEnprise.Blazor.Application.Services.Account
         UserIdentity User { get; }
         Task Initialize();
         Task<IResult> Login(LoginRequest loginRequest);
+        Task<string> RefreshToken();
     }
 }
