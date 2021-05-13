@@ -1,9 +1,5 @@
 ﻿using LEXEnprise.Blazor.Application.DTOs.Clients;
-using LEXEnprise.Blazor.Shared.Wrapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using LEXEnprise.Shared.Models.Paging;
 using System.Threading.Tasks;
 
 namespace LEXEnprise.Blazor.Application.Services.Clients

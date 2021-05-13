@@ -1,10 +1,9 @@
-﻿using System;
+﻿using LEXEnprise.Blazor.Shared.Wrapper;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace LEXEnprise.Blazor.Shared.Wrapper
+namespace LEXEnprise.Shared.Models.Paging
 {
     public class PaginatedResult<T> : Result
     {
@@ -17,7 +16,7 @@ namespace LEXEnprise.Blazor.Shared.Wrapper
 
         public List<T> Data { get; set; }
 
-        internal PaginatedResult(bool succeeded, List<T> data = default, List<string> messages = null, int count = 0, int page = 1, int pageSize = 10)
+        internal PaginatedResult(bool succeeded, List<T> data = default, List<string> messages = null, int count = 0, int page = 1, int pageSize = 10, int totalCount = 0)
         {
             Data = data;
             Succeeded = succeeded;
@@ -28,7 +27,7 @@ namespace LEXEnprise.Blazor.Shared.Wrapper
                 CurrentPage = page,
                 PageSize = pageSize,
                 TotalPages = (int)Math.Ceiling(count / (double)pageSize),
-                TotalCount = count,
+                TotalCount = totalCount,
             };
         }
 
@@ -37,10 +36,12 @@ namespace LEXEnprise.Blazor.Shared.Wrapper
             return new PaginatedResult<T>(false, default, messages);
         }
 
-        public static PaginatedResult<T> Success(List<T> data, int count, int page, int pageSize)
+        public static PaginatedResult<T> Success(List<T> data, int count, int page, int pageSize, int totalCount)
         {
-            return new PaginatedResult<T>(true, data, null, count, page, pageSize);
+            return new PaginatedResult<T>(true, data, null, count, page, pageSize, totalCount);
         }
+
+
 
         public bool HasPreviousPage => PageMetaData.CurrentPage > 1;
 

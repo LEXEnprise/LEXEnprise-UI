@@ -1,5 +1,8 @@
-﻿<h3>Pagination</h3>
-
-@code {
-
-}
+﻿<ul class="pagination pagination-sm float-right">
+    @foreach (var link in _links)
+    {
+        <li @onclick="() => OnSelectedPage(link)" class="page-item @(link.Enabled ? null : "disabled") @(link.Active ? "active" : null)">
+            <span class="page-link" href="#">@link.Text</span>
+        </li>
+    }
+</ul>

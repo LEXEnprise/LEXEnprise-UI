@@ -29,7 +29,8 @@ namespace LEXEnprise.Blazor.Clients.Pages
         [Inject]
         public HttpInterceptorService Interceptor { get; set; }
 
-        public PageMetaData PageMetaData { get; set; }
+        public PageMetaData PageMetaData { get; set; } = new PageMetaData();
+
         public List<GetClientResponse> Clients = new List<GetClientResponse>();
 
         //protected override void OnInitialized()
@@ -38,6 +39,7 @@ namespace LEXEnprise.Blazor.Clients.Pages
             PageTitle = Config["PageTitles:ClientListTitle"];
             BreadCrumbTitle = "Clients List";
             Interceptor.RegisterEvent();
+            _getClientsRequest.PageSize = int.Parse(Config["PaginationSettings:PageSize"]);
 
             await GetClients();
         }
@@ -57,6 +59,11 @@ namespace LEXEnprise.Blazor.Clients.Pages
         //{
         //    await GetClients();
         //}
+        private async Task SelectedPage(int page)
+        {
+            _getClientsRequest.PageNumber = page;
+            await GetClients();
+        }
 
         public void Dispose() => Interceptor.DisposeEvent();
     }

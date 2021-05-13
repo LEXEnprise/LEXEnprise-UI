@@ -3,6 +3,7 @@ using LEXEnprise.Blazor.Shared.Wrapper;
 using System.Net.Http;
 using System.Threading.Tasks;
 using LEXEnprise.Blazor.Infrastructure.Extensions;
+using LEXEnprise.Shared.Models.Paging;
 
 namespace LEXEnprise.Blazor.Application.Services.Clients
 {

@@ -1,4 +1,5 @@
 ﻿using LEXEnprise.Blazor.Shared.Wrapper;
+using LEXEnprise.Shared.Models.Paging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
