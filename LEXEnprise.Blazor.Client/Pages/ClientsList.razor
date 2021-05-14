@@ -1,35 +1,40 @@
 ﻿@page "/clients"
 @using LEXEnprise.Blazor.Shared.Components
 @using LEXEnprise.Blazor.Clients.Components
-@attribute [Authorize(Roles ="MISStaff,Lawyer")]
+@attribute [Authorize(Roles = "MISStaff,Lawyer")]
 
 <PageHeader PageTitle=@PageTitle BreadCrumbTitle="@BreadCrumbTitle" />
 <MainContent>
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card">
-                    <div class="card-header">
-                        <!-- <h3 class="card-title">Clients Listing</h3> -->
-                        <div class="card-tools">
-                            <Pagination MetaData="PageMetaData"
-                                        Spread="2"
-                                        SelectedPage="SelectedPage" />
-                        </div>
-                    </div>
-                    <div class="card-body table-responsive p-0" style="height: 400px;">
-                       <ClientsTable Clients="Clients" />
-                    </div>
-                    <div class="card-footer clearfix">
+                <div class="card-header">
+                    <div class="card-tools">
                         <Pagination MetaData="PageMetaData"
                                     Spread="2"
                                     SelectedPage="SelectedPage" />
                     </div>
                 </div>
+                <div class="card-body table-responsive p-0" style="height: 400px;">
+                    <ClientsTable Clients="Clients" />
+                </div>
+                <div class="card-footer clearfix">
+                    <Pagination MetaData="PageMetaData"
+                                Spread="2"
+                                SelectedPage="SelectedPage" />
+                </div>
+                @if (Clients.Count == 0)
+                {
+                    <div id="spinner" class="overlay"><i class="fas fa-2x fa-sync-alt fa-spin"></i></div>
+                }
+                else
+                {
+                    <div id="spinner" class="overlay spinner">
+                        <i class="fas fa-2x fa-sync-alt fa-spin spin-center"></i>
+                    </div>
+                }
             </div>
         </div>
     </div>
-    @*<div class="row">
-        <button type="submit" class="btn btn-primary btn-block" @onclick="RefreshClients">Refresh</button>
-    </div>*@
 </MainContent>
+
