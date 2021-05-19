@@ -6,13 +6,18 @@
 <PageHeader PageTitle=@PageTitle BreadCrumbTitle="@BreadCrumbTitle" />
 <MainContent>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-12">
             <div class="card">
                 <div class="card-header">
                     <div class="card-tools">
-                        <Pagination MetaData="PageMetaData"
-                                    Spread="2"
-                                    SelectedPage="SelectedPage" />
+                        <Pagination MetaData="PageMetaData" Spread="2" SelectedPage="SelectedPage" />
+                    </div>
+                    <div class="card-tools">
+                        <span>&nbsp;</span>
+                    </div>
+                    <div class="card-tools card-search">
+                        <SearchByName OnSearchSubmit="SubmitSearchValue"
+                                      OnFilterSubmit="ShowFilterModal" />
                     </div>
                 </div>
                 <div class="card-body table-responsive p-0" style="height: 400px;">
@@ -23,16 +28,7 @@
                                 Spread="2"
                                 SelectedPage="SelectedPage" />
                 </div>
-                @if (Clients.Count == 0)
-                {
-                    <div id="spinner" class="overlay"><i class="fas fa-2x fa-sync-alt fa-spin"></i></div>
-                }
-                else
-                {
-                    <div id="spinner" class="overlay spinner">
-                        <i class="fas fa-2x fa-sync-alt fa-spin spin-center"></i>
-                    </div>
-                }
+                <div id="spinner" style="display: block;" class="overlay spinner"><i class="fas fa-2x fa-sync-alt fa-spin spin-center"></i></div>
             </div>
         </div>
     </div>

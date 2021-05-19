@@ -1,4 +1,5 @@
 ﻿using LEXEnprise.Blazor.Application.Authentication;
+using LEXEnprise.Blazor.Application.Constants;
 using LEXEnprise.Blazor.Application.Models;
 using LEXEnprise.Blazor.Application.Models.Account;
 using LEXEnprise.Blazor.Application.Routes;
@@ -19,8 +20,6 @@ namespace LEXEnprise.Blazor.Application.Services.Account
     {
         private readonly ILocalStorageHelper _localStorage;
         private readonly AuthenticationStateProvider _authStateProvider;
-        private const string UserIdentityKey = "IdentityKey";
-        private const string SecTokensKey = "SecTokensKey";
 
         public UserIdentity User
         {
@@ -29,7 +28,7 @@ namespace LEXEnprise.Blazor.Application.Services.Account
         }
         public async Task Initialize()
         {
-            User = await _localStorage.GetItemAsync<UserIdentity>(UserIdentityKey);
+            User = await _localStorage.GetItemAsync<UserIdentity>(StorageKeys.UserIdentityKey);
         }
 
         public AccountService(HttpClient httpClient,
@@ -58,8 +57,8 @@ namespace LEXEnprise.Blazor.Application.Services.Account
             };
 
             //NOTE: Create new interface and implementing class for handling localstorage.
-            _localStorage.SetItemAsync(UserIdentityKey, User);
-            _localStorage.SetItemAsync(SecTokensKey, secTokens);
+            _localStorage.SetItemAsync(StorageKeys.UserIdentityKey, User);
+            _localStorage.SetItemAsync(StorageKeys.SecTokensKey, secTokens);
         }
 
         public async Task<IResult> Login(LoginRequest loginRequest)
@@ -76,8 +75,7 @@ namespace LEXEnprise.Blazor.Application.Services.Account
                     //Notifies AuthenticationStateProvide that authentication state has changed.
                     ((AuthStateProvider)_authStateProvider).NotifyUserAuthentication(result.Data.Token);
 
-                    //Place token to httprequest.
-                    //NOTE: This should be later uncommented out.
+                    //Place token to httprequest and save to localstorage for later use.
                     SetHttpHeaderBearer(result.Data.Token);
                 }
                 catch (Exception ex)
@@ -97,10 +95,11 @@ namespace LEXEnprise.Blazor.Application.Services.Account
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
+
         public async Task<string> RefreshToken()
         {
-            var secTokens = await _localStorage.GetItemAsync<SecTokens>(SecTokensKey);
-            var response = await _httpClient.PostAsJsonAsync("/auth-service/refreshtoken", 
+            var secTokens = await _localStorage.GetItemAsync<SecTokens>(StorageKeys.SecTokensKey);
+            var response = await _httpClient.PostAsJsonAsync(AccountsEndpoint.RefreshToken, 
                             new RefreshTokenRequest
                             {
                                 Token = secTokens.Token,
@@ -115,7 +114,7 @@ namespace LEXEnprise.Blazor.Application.Services.Account
             var result = await response.ToResult<RefreshTokenResponse>();
             var newToken = result.Data.NewToken;
 
-            await _localStorage.SetItemAsync<SecTokens>(SecTokensKey, new SecTokens
+            await _localStorage.SetItemAsync<SecTokens>(StorageKeys.SecTokensKey, new SecTokens
             {
                 Token = newToken,
                 RefreshToken = result.Data.NewRefreshToken

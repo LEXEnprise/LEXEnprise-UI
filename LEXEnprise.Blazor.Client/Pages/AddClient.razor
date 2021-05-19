@@ -3,13 +3,25 @@
 
 <PageHeader PageTitle=@PageTitle />
 <MainContent>
-    <div style="text-align:center">
-        <h1>
-            Welcome to LEXEnprise Add New Client!!!
-        </h1>
+    <div class="row">
+        <EditForm Model="@addClientModel" OnValidSubmit="OnValidSubmit">
+            <div class="col-md-6">
+                <div class="card-search card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Basic Information</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email address</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+
+            </div>
+        </EditForm>
     </div>
 </MainContent>
 
-@code {
-    public string PageTitle { get; set; } = "Add Client";
-}

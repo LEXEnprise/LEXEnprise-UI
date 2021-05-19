@@ -1,6 +1,11 @@
-﻿using LEXEnprise.Blazor.Application.DTOs.Clients;
+﻿using Blazored.Modal;
+using Blazored.Modal.Services;
+using LEXEnprise.Blazor.Application.Models.Clients;
+using LEXEnprise.Blazor.Application.Models.Lookup;
 using LEXEnprise.Blazor.Application.Services.Account;
 using LEXEnprise.Blazor.Application.Services.Clients;
+using LEXEnprise.Blazor.Application.Services.Lookup;
+using LEXEnprise.Blazor.Clients.Components;
 using LEXEnprise.Blazor.Shared.Wrapper;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +28,9 @@ namespace LEXEnprise.Blazor.Clients.Pages
         protected IConfiguration Config { get; set; }
 
         [Inject]
+        public ILookupService LookupService { get; set; }
+
+        [Inject]
         public IClientsService ClientService { get; set; }
 
         private GetClientsRequest _getClientsRequest = new GetClientsRequest();
@@ -34,16 +42,22 @@ namespace LEXEnprise.Blazor.Clients.Pages
         public IJSRuntime JSRuntime { get; set; }
         private IJSObjectReference _jsModule;
 
+        [CascadingParameter] 
+        public IModalService Modal { get; set; }
+
         public PageMetaData PageMetaData { get; set; } = new PageMetaData();
 
         public List<GetClientResponse> Clients = new List<GetClientResponse>();
 
-        //protected override void OnInitialized()
-        protected async override Task OnInitializedAsync()
+        public List<Country> Countries = new List<Country>();
+        
+        
+        protected override async Task OnInitializedAsync()
         {
             PageTitle = Config["PageTitles:ClientListTitle"];
             BreadCrumbTitle = "Clients List";
             Interceptor.RegisterEvent();
+
             _getClientsRequest.PageSize = int.Parse(Config["PaginationSettings:PageSize"]);
 
             await GetClients();
@@ -54,8 +68,13 @@ namespace LEXEnprise.Blazor.Clients.Pages
         {
             if (firstRender)
             {
-                _jsModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/clients/clients.js");
+                _jsModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "/js/clients/clients.js");
             }
+        }
+
+        private async Task GetLookup()
+        {
+            Countries = await LookupService.GetCountries();
         }
 
         private async Task GetClients()
@@ -70,14 +89,8 @@ namespace LEXEnprise.Blazor.Clients.Pages
             }
         }
 
-        //private async Task RefreshClients()
-        //{
-        //    await GetClients();
-        //}
-        private async Task SelectedPage(int page)
+        private async Task LoadClients()
         {
-            _getClientsRequest.PageNumber = page;
-            
             await DisplaySpinner();
             try
             {
@@ -88,11 +101,72 @@ namespace LEXEnprise.Blazor.Clients.Pages
                 await HideSpinner();
             }
         }
+        private async Task SelectedPage(int page)
+        {
+            _getClientsRequest.PageNumber = page;
+            await LoadClients();
+        }
 
-        //private async Task DisplaySpinner() => await _jsModule.InvokeVoidAsync("displaySpinner", _spinnerRef);
-        private async Task DisplaySpinner() => await _jsModule.InvokeVoidAsync("displaySpinner", "spinner");
+        private async Task DisplaySpinner()
+        {
+            if (_jsModule != null)
+                await _jsModule.InvokeVoidAsync("displaySpinner", "spinner");
+        }
 
-        private async Task HideSpinner() => await _jsModule.InvokeVoidAsync("hideSpinner", "spinner");
+        private async Task HideSpinner()
+        {
+            if (_jsModule != null)
+                await _jsModule.InvokeVoidAsync("hideSpinner", "spinner");
+        }
+
+        private async Task SubmitSearchValue(string searchTerm)
+        {
+            Console.WriteLine(searchTerm);
+            _getClientsRequest.PageNumber = 1;
+            _getClientsRequest.SearchString = searchTerm;
+            await LoadClients();
+        }
+
+        private async Task GetFilteredClients(FilterClientsModel filter)
+        {
+            await DisplaySpinner();
+            try
+            {
+                var filterRequest = new GetFilteredClientsRequest
+                {
+                    MetaData = new PageMetaData { CurrentPage = _getClientsRequest.PageNumber, PageSize = _getClientsRequest.PageSize },
+                    Filter = filter
+                };
+                var response = await ClientService.GetFilteredClients(filterRequest);
+
+                if (response.Succeeded)
+                {
+                    Clients = response.Data.ToList();
+                    PageMetaData = response.PageMetaData;
+                }
+            }
+            finally
+            {
+                await HideSpinner();
+            }
+        }
+
+        private async Task ShowFilterModal()
+        {
+            var options = new ModalOptions { UseCustomLayout = true };
+            var parameters = new ModalParameters();
+            parameters.Add(nameof(FilterClientsModal.Title), "Advance Filter");
+            var filterModalForm = Modal.Show<FilterClientsModal>("Custom Layout", parameters, options);
+            var result = await filterModalForm.Result;
+
+            if (!result.Cancelled)
+            {
+                var filter = result.Data != null ? (result.Data as FilterClientsModel) : null;
+
+                await GetFilteredClients(filter);
+            }
+
+        }
 
         public void Dispose() => Interceptor.DisposeEvent();
     }

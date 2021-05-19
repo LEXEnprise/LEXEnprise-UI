@@ -8,7 +8,7 @@
             <!-- /.login-logo -->
             <div class="card card-outline card-primary">
                 <div class="card-header text-center">
-                    <a href="./" class="h1"><b>Lex</b>ENPRISE</a>
+                    <a href="./" class="h1"><b>Lex</b>Enprise</a>
                 </div>
                 <div class="card-body">
                     <p class="login-box-msg">Sign in to start your session</p>
@@ -16,7 +16,7 @@
                     <EditForm Model="@_loginModel" OnValidSubmit="OnValidSubmit">
                         <DataAnnotationsValidator />
                         <div class="input-group mb-3">
-                            <InputText @bind-Value="_loginModel.UserName" class="form-control"/>
+                            <InputText @bind-Value="_loginModel.UserName" class="form-control" placeholder="Username"/>
                             <ValidationMessage For="@(() => _loginModel.UserName)" />
                             <div class="input-group-append">
                                 <div class="input-group-text">
@@ -25,7 +25,7 @@
                             </div>
                         </div>
                         <div class="input-group mb-3">
-                            <InputText @bind-Value="_loginModel.Password" type="password" class="form-control" />
+                            <InputText @bind-Value="_loginModel.Password" type="password" class="form-control" placeholder="Password"/>
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-lock"></span>
@@ -66,28 +66,3 @@
             <!-- /.card -->
         </div>
  </div>
-
-
-@code 
-{
-    private LoginRequest _loginModel = new LoginRequest();
-    private bool _loading;
-
-    private async void OnValidSubmit()
-    {
-        _loading = true;
-        try
-        {
-            var result = await AccountService.Login(_loginModel);
-
-            if (result.Succeeded)
-                NavigationManager.NavigateTo("/");
-
-        }
-        catch (Exception ex)
-        {
-            _loading = false;
-            StateHasChanged();
-        }
-    }
-}

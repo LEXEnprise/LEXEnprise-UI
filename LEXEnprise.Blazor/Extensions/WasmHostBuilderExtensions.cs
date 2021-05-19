@@ -1,4 +1,5 @@
 ﻿using Blazored.LocalStorage;
+using Blazored.Modal;
 using LEXEnprise.Blazor.Application.Authentication;
 using LEXEnprise.Blazor.Application.Services;
 using LEXEnprise.Blazor.Application.Services.Account;
@@ -57,6 +58,8 @@ namespace LEXEnprise.Blazor.Extensions
                 .AddScoped<AuthenticationStateProvider, AuthStateProvider>()
                 .AddAppServices()
                 .AddHttpClientInterceptor();
+
+            builder.Services.AddBlazoredModal();
 
             return builder;
         }

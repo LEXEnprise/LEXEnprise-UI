@@ -3,6 +3,10 @@
     align-items: center;
 }
 
+.card-search {
+    margin-right: 10px !important;
+}
+
 @media (min-width: 300px) {
     .spin-center {
         margin-left: 47%;
@@ -13,7 +17,7 @@
 @media (min-width: 576px) {
     .spin-center {
         margin-left: 47%;
-        margin-top: 15%;
+        margin-top: 20%;
     }
 }
 
@@ -37,3 +41,4 @@
         margin-top: 15%;
     }
 }
+

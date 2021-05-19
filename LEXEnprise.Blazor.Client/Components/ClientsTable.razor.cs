@@ -1,4 +1,4 @@
-﻿using LEXEnprise.Blazor.Application.DTOs.Clients;
+﻿using LEXEnprise.Blazor.Application.Models.Clients;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Collections.Generic;

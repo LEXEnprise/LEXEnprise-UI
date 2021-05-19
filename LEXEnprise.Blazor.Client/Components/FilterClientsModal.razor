@@ -1,0 +1,81 @@
+﻿<div class="modal fade show d-block" tabindex="-1" role="dialog">
+    <div class="modal-backdrop fade show" @onclick="Cancel"></div>
+    <div class="modal-dialog" style="z-index: 1050">
+        <!-- Pop it above the backdrop -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@Title</h4>
+                <button type="button" class="close" aria-label="Close" @onclick="Cancel">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <EditForm class="form-horizontal" Model="ClientsFilter" OnValidSubmit="SubmitFilter">
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="clientNumber" class="col-sm-3 col-form-label">Client Number</label>
+                        <div class="col-sm-7">
+                            <InputText @bind-Value="ClientsFilter.ClientNumber" class="form-control" placeholder="Client Number" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="clientName" class="col-sm-3 col-form-label">Client Name</label>
+                        <div class="col-sm-7">
+                            <InputText @bind-Value="ClientsFilter.ClientName" class="form-control" placeholder="Client Name" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="clientIndustry" class="col-sm-3 col-form-label">Industry</label>
+                        <div class="col-sm-7">
+
+                            <InputSelect @bind-Value="ClientsFilter.ClientIndustryId" class="form-control" placeholder="Industry">
+                                <option value="0">Select</option>
+                                @*<option value="1">Law Firm</option>
+                                <option value="2">IT Consulting</option>*@
+                                @foreach (var industry in Industries)
+                                {
+                                    <option value="@industry.Id">@industry.IndustryName</option>
+                                }
+                            </InputSelect>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="clientIType" class="col-sm-3 col-form-label">Client Type</label>
+                        <div class="col-sm-7">
+
+                            <InputSelect @bind-Value="ClientsFilter.ClientTypeId" class="form-control" placeholder="Client Type">
+                                <option value="0">Select</option>
+                                @*<option value="1">Corporate</option>
+                                <option value="2">Individual</option>*@
+                                @foreach (var clientType in ClientTypes)
+                                {
+                                    <option value="@clientType.Id">@clientType.ClientTypeName</option>
+                                }
+                            </InputSelect>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="clientStatus" class="col-sm-3 col-form-label">Status</label>
+                        <div class="col-sm-7">
+
+                            <InputSelect @bind-Value="ClientsFilter.ClientStatusId" class="form-control" placeholder="Status">
+                                <option value="0">Select</option>
+                                @*<option value="1">Dormant</option>
+                                <option value="2">Inactive</option>
+                                <option value="3">Active</option>*@
+                                @foreach (var status in ClientStatuses)
+                                {
+                                    <option value="@status.Id">@status.Status</option>
+                                }
+                            </InputSelect>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button @onclick="Cancel" class="btn btn-outline-light">Cancel</button>
+                    <button type="submit" class="btn btn-outline-light">Submit</button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+

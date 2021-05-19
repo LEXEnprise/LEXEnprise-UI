@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace LEXEnprise.Blazor.Application.Models
 {
-    public class ClientStatus
+    public abstract class BaseModel
     {
         public int Id { get; set; }
-        public string Status { get; set; }
     }
 }

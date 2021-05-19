@@ -12023,6 +12023,7 @@ html.maximized-card {
 
 .dark-mode .table.table-head-fixed thead tr:nth-child(1) th {
   background-color: #3f474e;
+  height: 15px;
 }
 
 .carousel-control-prev .carousel-control-custom-icon {

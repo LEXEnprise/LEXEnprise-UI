@@ -1,9 +1,10 @@
-﻿using LEXEnprise.Blazor.Application.DTOs.Clients;
-using LEXEnprise.Blazor.Shared.Wrapper;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using LEXEnprise.Blazor.Application.Models.Clients;
 using LEXEnprise.Blazor.Infrastructure.Extensions;
 using LEXEnprise.Shared.Models.Paging;
+using System;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Threading.Tasks;
 
 namespace LEXEnprise.Blazor.Application.Services.Clients
 {
@@ -13,11 +14,38 @@ namespace LEXEnprise.Blazor.Application.Services.Clients
 
         public async Task<PaginatedResult<GetClientResponse>> GetClients(GetClientsRequest request)
         {
-            var req = Routes.ClientsEndpoint.GetPaged(request.PageNumber,
+            try
+            {
+                var req = Routes.ClientsEndpoint.GetPaged(request.PageNumber,
                             request.PageSize, request.SearchString, request.SortString);
-            var response = await _httpClient.GetAsync(req);
+                var response = await _httpClient.GetAsync(req);
+
+                return await response.ToPaginatedResult<GetClientResponse>();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
             
-            return await response.ToPaginatedResult<GetClientResponse>();
+        }
+
+        public async Task<PaginatedResult<GetClientResponse>> GetFilteredClients(GetFilteredClientsRequest request)
+        {
+            try
+            {
+                request.MetaData.CurrentPage = 1;
+                request.SortString = request.SortString ?? "ClientName";
+                var response = await _httpClient.PostAsJsonAsync(Routes.ClientsEndpoint.FilteredPaged, request);
+                
+                if (response.IsSuccessStatusCode)
+                    return await response.ToPaginatedResult<GetClientResponse>();
+
+                return null;                   
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }
