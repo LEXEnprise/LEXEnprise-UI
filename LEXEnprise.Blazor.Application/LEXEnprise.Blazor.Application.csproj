@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Folder Include="Mappings\" />
+    <Folder Include="Models\Matters\" />
     <Folder Include="Resources\" />
   </ItemGroup>
 

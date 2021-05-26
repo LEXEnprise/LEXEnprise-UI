@@ -1,68 +1,73 @@
 ﻿@page "/accounts/login"
 @inject IAccountService AccountService
 @inject NavigationManager NavigationManager
-@using LEXEnprise.Blazor.Application.Models.Account 
+@using LEXEnprise.Blazor.Application.Models.Account
 
- <div class="login-page dark-mode" style="min-height: 466px; height: 80vh;">
-     <div class="login-box">
-            <!-- /.login-logo -->
-            <div class="card card-outline card-primary">
-                <div class="card-header text-center">
-                    <a href="./" class="h1"><b>Lex</b>Enprise</a>
-                </div>
-                <div class="card-body">
-                    <p class="login-box-msg">Sign in to start your session</p>
-
-                    <EditForm Model="@_loginModel" OnValidSubmit="OnValidSubmit">
-                        <DataAnnotationsValidator />
-                        <div class="input-group mb-3">
-                            <InputText @bind-Value="_loginModel.UserName" class="form-control" placeholder="Username"/>
-                            <ValidationMessage For="@(() => _loginModel.UserName)" />
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <span class="fas fa-user"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="input-group mb-3">
-                            <InputText @bind-Value="_loginModel.Password" type="password" class="form-control" placeholder="Password"/>
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <span class="fas fa-lock"></span>
-                                </div>
-                            </div>
-                            <ValidationMessage For="@(() => _loginModel.Password)" />
-                        </div>
-                        <div class="row">
-                            <!--
-                            <div class="col-8">
-                                <div class="icheck-primary">
-                                    <input type="checkbox" id="remember">
-                                    <label for="remember">
-                                        Remember Me
-                                    </label>
-                                </div>
-                            </div>
-                            -->
-                            <!-- /.col -->
-                            <div class="col-4">
-                                <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-                            </div>
-                            <!-- /.col -->
-                        </div>
-                    </EditForm>
-
-                    <p class="mb-1">
-                        <a href="forgot-password.html">I forgot my password</a>
-                    </p>
-                    <!--
-                    <p class="mb-0">
-                        <a href="register.html" class="text-center">Register a new membership</a>
-                    </p>
-                    -->
-                </div>
-                <!-- /.card-body -->
+<div class="login-page dark-mode" style="min-height: 466px; height: 80vh;">
+    <div class="login-box">
+        <!-- /.login-logo -->
+        <div class="card card-outline card-primary">
+            <div class="card-header text-center">
+                <a href="./" class="h1"><b>Lex</b>Enprise</a>
             </div>
-            <!-- /.card -->
+            <div class="card-body">
+                <p class="login-box-msg">Sign in to start your session</p>
+
+                <EditForm Model="@_loginModel" OnValidSubmit="OnValidSubmit">
+                    <DataAnnotationsValidator />
+                    <div class="input-group mb-3">
+                        <InputText @bind-Value="_loginModel.UserName" class="form-control" placeholder="Username" />
+                        <ValidationMessage For="@(() => _loginModel.UserName)" />
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <InputText @bind-Value="_loginModel.Password" type="password" class="form-control" placeholder="Password" />
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                        <ValidationMessage For="@(() => _loginModel.Password)" />
+                    </div>
+                    <div class="row">
+                        <!--
+                <div class="col-8">
+                    <div class="icheck-primary">
+                        <input type="checkbox" id="remember">
+                        <label for="remember">
+                            Remember Me
+                        </label>
+                    </div>
+                </div>
+                -->
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                        </div>
+                        <!-- /.col -->
+
+                    </div>
+
+                </EditForm>
+                <!--
+        <p class="mb-1">
+            <a href="forgot-password.html">I forgot my password</a>
+        </p>
+
+        <p class="mb-0">
+            <a href="register.html" class="text-center">Register a new membership</a>
+        </p>
+        -->
+
+            </div>
+            <div id="spinner" style="display: none;" class="overlay"><i class="fas fa-2x fa-sync-alt fa-spin spin-center"></i></div>
+            <!-- /.card-body -->
         </div>
- </div>
+        <!-- /.card -->
+        
+    </div>
+</div>

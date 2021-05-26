@@ -1,4 +1,11 @@
-﻿export function displaySpinner(id) {
+﻿export function focusOnElementById(id) {
+    var element = document.getElementById(id);
+
+    if (element != null)
+        element.focus();
+}
+
+export function displaySpinner(id) {
     var element = document.getElementById(id);
 
     if (element != null)
@@ -11,3 +18,11 @@ export function hideSpinner(id) {
     if (element != null)
         element.style.display = "none";
 }
+
+export function initDateAcquiredDatePicker() {
+    $('#dateAcquired').datetimepicker({
+        format: 'L'
+    });
+}
+
+

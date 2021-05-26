@@ -8,12 +8,12 @@ namespace LEXEnprise.Blazor.Shared.Wrapper
 {
     public class PageMetaData
     {
-        public int CurrentPage { get; set; } = 1;
+        public int PageNumber { get; set; } = 1;
         public int TotalPages { get; set; }
         public int TotalCount { get; set; }
         public int PageSize { get; set; } = 10;
 
-        public bool HasPrevious => CurrentPage > 1;
-        public bool HasNext => CurrentPage < TotalPages; 
+        public bool HasPrevious => PageNumber > 1;
+        public bool HasNext => PageNumber < TotalPages; 
     }
 }

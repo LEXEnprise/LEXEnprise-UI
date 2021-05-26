@@ -24,7 +24,7 @@ namespace LEXEnprise.Shared.Models.Paging
 
             PageMetaData = new PageMetaData
             {
-                CurrentPage = page,
+                PageNumber = page,
                 PageSize = pageSize,
                 TotalPages = (int)Math.Ceiling(count / (double)pageSize),
                 TotalCount = totalCount,
@@ -43,8 +43,8 @@ namespace LEXEnprise.Shared.Models.Paging
 
 
 
-        public bool HasPreviousPage => PageMetaData.CurrentPage > 1;
+        public bool HasPreviousPage => PageMetaData.PageNumber > 1;
 
-        public bool HasNextPage => PageMetaData.CurrentPage < PageMetaData.TotalPages;
+        public bool HasNextPage => PageMetaData.PageNumber < PageMetaData.TotalPages;
     }
 }

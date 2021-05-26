@@ -10,5 +10,6 @@ namespace LEXEnprise.Blazor.Infrastructure.Helpers
     {
         Task SetItemAsync<T>(string key, T data);
         Task<T> GetItemAsync<T>(string key);
+        Task RemoveItemAsync(string key);
     }
 }

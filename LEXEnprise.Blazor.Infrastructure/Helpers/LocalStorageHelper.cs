@@ -28,6 +28,9 @@ namespace LEXEnprise.Blazor.Infrastructure.Helpers
             return data;
         }
 
-
+        public async Task RemoveItemAsync(string key)
+        {
+            await _localStorage.RemoveItemAsync(key);
+        }
     }
 }

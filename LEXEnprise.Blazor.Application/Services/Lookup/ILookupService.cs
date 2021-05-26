@@ -10,6 +10,8 @@ namespace LEXEnprise.Blazor.Application.Services.Lookup
     public interface ILookupService : IService
     {
         Task<List<Country>> GetCountries();
+        Task<List<State>> GetStatesByCountry(int countryId);
+        Task<List<City>> GetCitiesByState(int stateId);
         Task<List<ClientType>> GetClientTypes();
         Task<List<Industry>> GetIndustries();
         Task<List<Currency>> GetCurrencies();

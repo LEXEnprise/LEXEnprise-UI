@@ -18,7 +18,7 @@ namespace LEXEnprise.Blazor.Application.Services.Account
 {
     public class AccountService : ServiceBase, IAccountService
     {
-        private readonly ILocalStorageHelper _localStorage;
+        private readonly ILocalStorageHelper _localStorageHelper;
         private readonly AuthenticationStateProvider _authStateProvider;
 
         public UserIdentity User
@@ -28,14 +28,14 @@ namespace LEXEnprise.Blazor.Application.Services.Account
         }
         public async Task Initialize()
         {
-            User = await _localStorage.GetItemAsync<UserIdentity>(StorageKeys.UserIdentityKey);
+            User = await _localStorageHelper.GetItemAsync<UserIdentity>(StorageKeys.UserIdentityKey);
         }
 
         public AccountService(HttpClient httpClient,
             ILocalStorageHelper localStorage,
             AuthenticationStateProvider authStateProvider) : base(httpClient) 
         {
-            _localStorage = localStorage;
+            _localStorageHelper = localStorage;
             _authStateProvider = authStateProvider;
         }
 
@@ -57,8 +57,8 @@ namespace LEXEnprise.Blazor.Application.Services.Account
             };
 
             //NOTE: Create new interface and implementing class for handling localstorage.
-            _localStorage.SetItemAsync(StorageKeys.UserIdentityKey, User);
-            _localStorage.SetItemAsync(StorageKeys.SecTokensKey, secTokens);
+            _localStorageHelper.SetItemAsync(StorageKeys.UserIdentityKey, User);
+            _localStorageHelper.SetItemAsync(StorageKeys.SecTokensKey, secTokens);
         }
 
         public async Task<IResult> Login(LoginRequest loginRequest)
@@ -98,7 +98,7 @@ namespace LEXEnprise.Blazor.Application.Services.Account
 
         public async Task<string> RefreshToken()
         {
-            var secTokens = await _localStorage.GetItemAsync<SecTokens>(StorageKeys.SecTokensKey);
+            var secTokens = await _localStorageHelper.GetItemAsync<SecTokens>(StorageKeys.SecTokensKey);
             var response = await _httpClient.PostAsJsonAsync(AccountsEndpoint.RefreshToken, 
                             new RefreshTokenRequest
                             {
@@ -114,7 +114,7 @@ namespace LEXEnprise.Blazor.Application.Services.Account
             var result = await response.ToResult<RefreshTokenResponse>();
             var newToken = result.Data.NewToken;
 
-            await _localStorage.SetItemAsync<SecTokens>(StorageKeys.SecTokensKey, new SecTokens
+            await _localStorageHelper.SetItemAsync<SecTokens>(StorageKeys.SecTokensKey, new SecTokens
             {
                 Token = newToken,
                 RefreshToken = result.Data.NewRefreshToken
@@ -123,6 +123,14 @@ namespace LEXEnprise.Blazor.Application.Services.Account
             SetHttpHeaderBearer(newToken);
 
             return newToken;
+        }
+
+        public async Task Logout()
+        {
+            this.User = null;
+
+            await _localStorageHelper.RemoveItemAsync(StorageKeys.SecTokensKey);
+            await _localStorageHelper.RemoveItemAsync(StorageKeys.UserIdentityKey);
         }
     }
 }

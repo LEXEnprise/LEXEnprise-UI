@@ -134,7 +134,7 @@ namespace LEXEnprise.Blazor.Clients.Pages
             {
                 var filterRequest = new GetFilteredClientsRequest
                 {
-                    MetaData = new PageMetaData { CurrentPage = _getClientsRequest.PageNumber, PageSize = _getClientsRequest.PageSize },
+                    MetaData = new PageMetaData { PageNumber = _getClientsRequest.PageNumber, PageSize = _getClientsRequest.PageSize },
                     Filter = filter
                 };
                 var response = await ClientService.GetFilteredClients(filterRequest);

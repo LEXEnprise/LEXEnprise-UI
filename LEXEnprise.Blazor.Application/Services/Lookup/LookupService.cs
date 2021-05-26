@@ -23,6 +23,8 @@ namespace LEXEnprise.Blazor.Application.Services.Lookup
             _localStorage = localStorage;
         }
 
+        
+
         public async Task<List<Country>> GetCountries()
         {
             var countries = await _localStorage.GetItemAsync<List<Country>>(CountriesKey);
@@ -31,12 +33,32 @@ namespace LEXEnprise.Blazor.Application.Services.Lookup
             {
                 var response = await _httpClient.GetAsync(LookupsEndpoint.GetCountries);
                 var result = await response.ToResult<List<Country>>();
-                
+
                 countries = result.Data;
                 await _localStorage.SetItemAsync<List<Country>>(CountriesKey, countries);
             }
 
             return countries;
+        }
+
+        public async Task<List<State>> GetStatesByCountry(int countryId)
+        {
+            var response = await _httpClient.GetAsync($"{LookupsEndpoint.GetStates}/{countryId}");
+
+            var result = await response.ToResult<List<State>>();
+            var states = result.Data;
+
+            return states;
+        }
+
+        public async Task<List<City>> GetCitiesByState(int stateId)
+        {
+            var response = await _httpClient.GetAsync($"{LookupsEndpoint.GetCities}/{stateId}");
+
+            var result = await response.ToResult<List<City>>();
+            var cities = result.Data;
+
+            return cities;
         }
 
         public async Task<List<ClientType>> GetClientTypes()

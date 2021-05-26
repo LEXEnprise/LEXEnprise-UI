@@ -1,0 +1,99 @@
+﻿@page "/dropdown"
+
+<h2 class='@(hightlight ? "bg-info" : "")'>
+    User Id: @UserId
+</h2>
+
+<hr />
+
+<h3>Using Select Tag</h3>
+<p>
+    <label>
+        Method 1 (2-way binding but do not need to handle an onchange event):<br />
+        <select @bind="UserId">
+            <option value=""></option>
+            @foreach (var u in users)
+            {
+                <option value="@u.Key">@u.Value</option>
+            }
+        </select>
+    </label>
+</p>
+<p>
+    <label>
+        Method 2 (need to handle the onchange event; 2-way binding via the control onchange event handler):<br />
+        <select value="@UserId" @onchange="OnChangeUserId">
+            <option value=""></option>
+            @foreach (var u in users)
+            {
+                <option value="@u.Key">@u.Value</option>
+            }
+        </select>
+    </label>
+</p>
+
+<h3>Using InputSelect Tag</h3>
+<EditForm EditContext="EditContext">
+    <p>
+        <label>
+            Method 3 (2-way binding;  event handling via the EditForm EditContext.OnFieldChanged)<br />
+            <InputSelect @bind-Value="@UserId">
+                <option value=""></option>
+                @foreach (var u in users)
+                {
+                    <option value="@u.Key">@u.Value</option>
+                }
+            </InputSelect>
+        </label>
+    </p>
+</EditForm>
+
+@code {
+    private EditContext EditContext;
+    private Dictionary<int, string> users = new Dictionary<int, string>();
+
+    private int? UserId { get; set; }
+    private bool hightlight { get; set; }
+
+    protected override void OnInitialized()
+    {
+        EditContext = new EditContext(users);
+        EditContext.OnFieldChanged += EditContext_OnFieldChanged;
+    }
+
+    protected override void OnParametersSet()
+    {
+        // simulate getting current data from the db (which would use async version of this event handler)
+        users.Add(1, "Bob");
+        users.Add(2, "Sue");
+        users.Add(3, "R2D2");
+        UserId = 2;
+
+        base.OnParametersSet();
+    }
+
+    private void EditContext_OnFieldChanged(object sender, FieldChangedEventArgs e)
+    {
+        if (e.FieldIdentifier.FieldName == "UserId")
+        {
+            DoStuff();
+        }
+    }
+
+    private void OnChangeUserId(ChangeEventArgs args)
+    {
+        // select tag's "value" attribute provide one-way data binding; to get 2-way,
+        // we need to manually set the value of the UserId based on the ChangeEventArgs
+        if (args.Value == null)
+            UserId = null;
+        else
+            UserId = int.Parse(args.Value.ToString());
+
+        DoStuff();
+    }
+
+    private void DoStuff()
+    {
+        hightlight = (UserId == 3);
+    }
+}

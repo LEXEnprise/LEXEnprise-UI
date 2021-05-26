@@ -1,0 +1,166 @@
+﻿@page "/addclient"
+@using LEXEnprise.Blazor.Shared.Components
+
+@attribute [Authorize(Roles = "MISStaff, Lawyer")]
+
+<PageHeader PageTitle=@PageTitle />
+<MainContent>
+    <div class="row">
+        <div class="col-md-12">
+            <EditForm Model="_addClientModel" OnValidSubmit="OnValidSubmit">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card card-info">
+                            <div class="card-header">
+                                <h3 class="card-title">Basic Information</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="clientName">Client Name</label>
+                                    <InputText id="@_clientNameId" @bind-Value="_addClientModel.ClientName" class="form-control" placeholder="Client Name" />
+                                    <ValidationMessage For="@(() => _addClientModel.ClientName)" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="clientType">Client Type</label>
+                                    <InputSelect @bind-Value="_addClientModel.ClientTypeId" class="form-control" placeholder="Client Type">
+                                        <option value="0">Select</option>
+
+                                        @foreach (var clientType in ClientTypes)
+                                        {
+                                            <option value="@clientType.Id">@clientType.ClientTypeName</option>
+                                        }
+                                    </InputSelect>
+                                </div>
+                                <div class="form-group">
+                                    <label for="industry">Industry</label>
+                                    <InputSelect @bind-Value="_addClientModel.ClientIndustryId" class="form-control" placeholder="Industry">
+                                        <option value="0">Select</option>
+                                        @foreach (var industry in Industries)
+                                        {
+                                            <option value="@industry.Id">@industry.IndustryName</option>
+                                        }
+                                    </InputSelect>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card card-success">
+                            <div class="card-header">
+                                <h3 class="card-title">Contact Information</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="email">Email Address</label>
+                                    <InputText @bind-Value="_addClientModel.Email" class="form-control" placeholder="Email Address" />
+                                    <ValidationMessage For="@(() => _addClientModel.Email)" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="phoneNumber">Phone Number</label>
+                                    <InputText @bind-Value="_addClientModel.PhoneNumber" class="form-control" placeholder="Phone Number" />
+                                    <ValidationMessage For="@(() => _addClientModel.PhoneNumber)" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="mobileNumber">Mobile Number</label>
+                                    <InputText @bind-Value="_addClientModel.MobileNumber" class="form-control" placeholder="Mobile Number" />
+                                    <ValidationMessage For="@(() => _addClientModel.MobileNumber)" />
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card card-info">
+                            <div class="card-header">
+                                <h3 class="card-title">Address Information</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="address1">Address 1</label>
+                                    <InputText @bind-Value="_addClientModel.Address1" class="form-control" placeholder="Address 1" />
+                                    <ValidationMessage For="@(() => _addClientModel.Address1)" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="address2">Address 2</label>
+                                    <InputText @bind-Value="_addClientModel.Address1" class="form-control" placeholder="Address 2" />
+                                    <ValidationMessage For="@(() => _addClientModel.Address2)" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="country">Country</label>
+                                    <select value="@_addClientModel.CountryId" @onchange="OnChangeCountry" class="form-control" placeholder="Country">
+                                        <option value="0">Select</option>
+                                        @foreach (var country in Countries)
+                                        {
+                                            <option value="@country.Id">@country.CountryName</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="state">State/Province</label>
+                                    <select value="@_addClientModel.StateId" @onchange="OnChangeState" class="form-control" placeholder="State/Province">
+                                        <option value="0">Select</option>
+                                        @foreach (var state in States)
+                                        {
+                                            <option value="@state.Id">@state.StateName</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="city">City</label>
+                                    <InputSelect @bind-Value="_addClientModel.CityId" class="form-control" placeholder="City">
+                                        <option value="0">Select</option>
+                                        @foreach (var city in Cities)
+                                        {
+                                            <option value="@city.Id">@city.CityName</option>
+                                        }
+                                    </InputSelect>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card card-success">
+                            <div class="card-header">
+                                <h3 class="card-title">Other Information</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="website">Web-Site</label>
+                                    <InputText @bind-Value="_addClientModel.Website" class="form-control" placeholder="Web-Site" />
+                                    <ValidationMessage For="@(() => _addClientModel.Website)" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Date Acquired:</label>
+                                    <div class="input-group date" id="dateAcquired" data-target-input="nearest">
+                                        <InputText @bind-Value="_addClientModel.DateAcquired" class="form-control datetimepicker-input" data-target="#dateAcquired"></InputText>
+                                        <div class="input-group-append" data-target="#dateAcquired" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="billingCurrency">Billing Currency</label>
+                                    <InputSelect @bind-Value="_addClientModel.BillingCurrencyId" class="form-control" placeholder="Billing Currency">
+                                        <option value="0">Select</option>
+                                        @foreach (var currency in Currencies)
+                                        {
+                                            <option value="@currency.Id">@currency.CurrencyCode</option>
+                                        }
+                                    </InputSelect>
+                                </div>
+                                <div class="form-group" style="margin-top: 28px;">
+                                    <label for="remarks">Remarks</label>
+                                    <InputTextArea @bind-Value="_addClientModel.Remarks" class="form-control"  rows="4" placeholder="Remarks" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</MainContent>

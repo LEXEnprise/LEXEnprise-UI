@@ -1,7 +1,8 @@
 ﻿@page "/clients"
 @using LEXEnprise.Blazor.Shared.Components
 @using LEXEnprise.Blazor.Clients.Components
-@attribute [Authorize(Roles = "MISStaff,Lawyer")]
+
+@attribute [Authorize(Roles = "MISStaff, Lawyer")]
 
 <PageHeader PageTitle=@PageTitle BreadCrumbTitle="@BreadCrumbTitle" />
 <MainContent>
@@ -9,6 +10,15 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
+                    <div class="card-tools" style="float: left !important;">
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-append">
+                                <a href="/addclient" class="btn btn-default">
+                                    <i class="fas fa-plus-square"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                     <div class="card-tools">
                         <Pagination MetaData="PageMetaData" Spread="2" SelectedPage="SelectedPage" />
                     </div>

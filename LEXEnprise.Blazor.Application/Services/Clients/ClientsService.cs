@@ -33,7 +33,7 @@ namespace LEXEnprise.Blazor.Application.Services.Clients
         {
             try
             {
-                request.MetaData.CurrentPage = 1;
+                request.MetaData.PageNumber = 1;
                 request.SortString = request.SortString ?? "ClientName";
                 var response = await _httpClient.PostAsJsonAsync(Routes.ClientsEndpoint.FilteredPaged, request);
                 

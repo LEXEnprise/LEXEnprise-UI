@@ -7,13 +7,20 @@
 {
     <NavMenu />
     <TopBar />
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        @Body
+    </div>
+}
+else
+{
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper" style="margin-left: 1px !important;">
+        @Body
+    </div>
 }
 
-
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-    @Body
-</div>
 
 @if (IsLoggedIn)
 {
