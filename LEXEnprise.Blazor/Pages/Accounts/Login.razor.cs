@@ -60,7 +60,6 @@ namespace LEXEnprise.Blazor.Pages.Accounts
             {
                 await HideSpinner();
             }
-
         }
     }
 }

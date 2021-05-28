@@ -1,6 +1,7 @@
 @using System.Reflection
 @using Microsoft.AspNetCore.Components.WebAssembly.Services
 @inject LazyAssemblyLoader AssemblyLoader
+@inject NavigationManager Navigator
 
 
 <CascadingBlazoredModal>
@@ -17,7 +18,7 @@
         <NotFound>
             <CascadingAuthenticationState>
                 <LayoutView Layout="@typeof(MainLayout)">
-                    <p>Sorry, there's nothing at this address.</p>
+                    <CustomNotFound />
                 </LayoutView>
             </CascadingAuthenticationState>
         </NotFound>

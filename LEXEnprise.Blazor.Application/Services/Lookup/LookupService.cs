@@ -23,8 +23,6 @@ namespace LEXEnprise.Blazor.Application.Services.Lookup
             _localStorage = localStorage;
         }
 
-        
-
         public async Task<List<Country>> GetCountries()
         {
             var countries = await _localStorage.GetItemAsync<List<Country>>(CountriesKey);

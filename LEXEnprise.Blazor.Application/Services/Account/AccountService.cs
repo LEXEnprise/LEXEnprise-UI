@@ -131,6 +131,9 @@ namespace LEXEnprise.Blazor.Application.Services.Account
 
             await _localStorageHelper.RemoveItemAsync(StorageKeys.SecTokensKey);
             await _localStorageHelper.RemoveItemAsync(StorageKeys.UserIdentityKey);
+
+            ((AuthStateProvider)_authStateProvider).NotifyUserLogout();
+            _httpClient.DefaultRequestHeaders.Authorization = null;
         }
     }
 }

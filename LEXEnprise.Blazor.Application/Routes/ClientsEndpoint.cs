@@ -22,7 +22,7 @@ namespace LEXEnprise.Blazor.Application.Routes
         }
 
         public static string FilteredPaged = "v1/clients/getclients";
-        public static string Add = "v1/clients/add";
+        public static string Add = "v1/clients/addclient";
         public static string Delete = "v1/clients/delete";
         public static string Update = "v1/clients/update";
 

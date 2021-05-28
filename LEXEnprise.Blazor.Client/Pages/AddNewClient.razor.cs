@@ -1,6 +1,8 @@
 ﻿using LEXEnprise.Blazor.Application.Constants;
 using LEXEnprise.Blazor.Application.Models.Clients;
 using LEXEnprise.Blazor.Application.Models.Lookup;
+using LEXEnprise.Blazor.Application.Services.Account;
+using LEXEnprise.Blazor.Application.Services.Clients;
 using LEXEnprise.Blazor.Application.Services.Lookup;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
@@ -11,15 +13,21 @@ using System.Threading.Tasks;
 
 namespace LEXEnprise.Blazor.Clients.Pages
 {
-    public partial class AddNewClient
+    public partial class AddNewClient : IDisposable
     {
         [Parameter]
         public string PageTitle { get; set; } = "Add Client";
 
-        AddClientRequest _addClientModel = new AddClientRequest();
+        AddClientRequest _addClientModel;
 
         [Inject]
         public ILookupService LookupService { get; set; }
+        [Inject]
+        public IClientsService ClientsService { get; set; }
+        [Inject]
+        public NavigationManager Navigator { get; set; }
+        [Inject]
+        public HttpInterceptorService Interceptor { get; set; }
 
         [Parameter]
         public List<ClientType> ClientTypes { get; set; } = new List<ClientType>();
@@ -39,9 +47,13 @@ namespace LEXEnprise.Blazor.Clients.Pages
         private IJSObjectReference _jsModule;
         private string _clientNameId = "clientNameId";
         private string _selectStatesId = "selectStatesId";
+        private string _selectCitiesId = "selectedCitiesId";
 
         private async Task LoadLookups()
         {
+            _addClientModel = new AddClientRequest();
+            _addClientModel.DateAcquired = DateTime.Now;
+
             ClientTypes = await LookupService.GetClientTypes();
             Industries = await LookupService.GetIndustries();
 
@@ -51,6 +63,7 @@ namespace LEXEnprise.Blazor.Clients.Pages
         }
         protected override async Task OnInitializedAsync()
         {
+            Interceptor.RegisterEvent();
             await LoadLookups();
 
             _addClientModel.CountryId = LookupConstants.DEF_COUNTRYID;
@@ -68,23 +81,15 @@ namespace LEXEnprise.Blazor.Clients.Pages
 
         private async Task FocusOnClientName() => await _jsModule.InvokeVoidAsync("focusOnElementById", _clientNameId);
         private async Task FocusOnStates() => await _jsModule.InvokeVoidAsync("focusOnElementById", _selectStatesId);
+        private async Task FocusOnCities() => await _jsModule.InvokeVoidAsync("focusOnElementById", _selectCitiesId);
         private async Task InitialDateAcquiredPicker() => await _jsModule.InvokeVoidAsync("initDateAcquiredDatePicker");
-
-        
 
         private async Task OnValidSubmit()
         {
-            var model = _addClientModel;
-        }
+            var result = await ClientsService.AddClient(_addClientModel);
 
-        private void OnClear()
-        {
-            return;
-        }
-
-        private async Task LoadStatesByCountryId(int countryId)
-        {
-            
+            if (result != null)
+                Navigator.NavigateTo("/clients");
         }
 
         private async Task OnChangeCountry(ChangeEventArgs args)
@@ -94,7 +99,10 @@ namespace LEXEnprise.Blazor.Clients.Pages
                 var countryId = int.Parse(args.Value.ToString());
 
                 if (countryId > 0)
+                {
                     States = await LookupService.GetStatesByCountry(countryId);
+                    await FocusOnStates();
+                }
             }
         }
 
@@ -105,8 +113,20 @@ namespace LEXEnprise.Blazor.Clients.Pages
                 var stateId = int.Parse(args.Value.ToString());
 
                 if (stateId > 0)
+                {
+                    _addClientModel.StateId = stateId;
                     Cities = await LookupService.GetCitiesByState(stateId);
+                    await FocusOnCities();
+                }
+                    
             }
         }
+
+        private void Cancel()
+        {
+            Navigator.NavigateTo("/clients");
+        }
+
+        public void Dispose() => Interceptor.DisposeEvent();
     }
 }

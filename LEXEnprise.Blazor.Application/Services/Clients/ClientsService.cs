@@ -1,5 +1,6 @@
 ﻿using LEXEnprise.Blazor.Application.Models.Clients;
 using LEXEnprise.Blazor.Infrastructure.Extensions;
+using LEXEnprise.Blazor.Shared.Wrapper;
 using LEXEnprise.Shared.Models.Paging;
 using System;
 using System.Net.Http;
@@ -41,6 +42,23 @@ namespace LEXEnprise.Blazor.Application.Services.Clients
                     return await response.ToPaginatedResult<GetClientResponse>();
 
                 return null;                   
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async Task<IResult<int>> AddClient(AddClientRequest request)
+        {
+            try
+            {
+                var response = await _httpClient.PostAsJsonAsync(Routes.ClientsEndpoint.Add, request);
+
+                if (response.IsSuccessStatusCode)
+                    return await response.ToResult<int>();
+
+                return null;
             }
             catch (Exception ex)
             {
