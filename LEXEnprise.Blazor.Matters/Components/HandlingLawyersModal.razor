@@ -1,0 +1,39 @@
+﻿<div class="modal fade show d-block" tabindex="-1" role="dialog">
+    <div class="modal-backdrop fade show" @onclick="Close"></div>
+    <div class="modal-dialog" style="z-index: 1050">
+        <!-- Pop it above the backdrop -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@Title</h4>
+                <button type="button" class="close" aria-label="Close" @onclick="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @if (HandlingLawyers.Count > 0)
+                {
+                    <table class="table table-head-fixed table-hover text-nowrap table-bordered">
+                        <thead style="font-size: 13px !important;">
+                            <tr>
+                                <th>Name</th>
+                                <th>Email Address</th>
+                            </tr>
+                        </thead>
+                        <tbody style="font-size: 12px; !important;">
+                            @foreach (var lawyer in HandlingLawyers)
+                            {
+                                <tr>
+                                    <td class="align-middle">@lawyer.HandlingLawyer.Fullname</td>
+                                    <td class="align-middle">@lawyer.HandlingLawyer.EmailAddress</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+            <div class="modal-footer">
+                <button @onclick="Close" class="btn btn-outline-light">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

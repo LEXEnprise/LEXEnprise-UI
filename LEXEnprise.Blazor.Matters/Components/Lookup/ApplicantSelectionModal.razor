@@ -1,0 +1,57 @@
+﻿<div class="modal fade show d-block" tabindex="-1" role="dialog">
+    <div class="modal-backdrop fade show" @onclick="Cancel"></div>
+    <div class="modal-dialog modal-lg" style="z-index: 1050">
+        <!-- Pop it above the backdrop -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@Title</h4>
+                <button type="button" class="close" aria-label="Close" @onclick="Cancel">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-tools" style="float: left !important; margin-left: -20px !important;">
+                            <SearchByName OnSearchSubmit="SubmitSearchValue" EnableFilter=false />
+                        </div>
+                        <div class="card-tools">
+                            <Pagination MetaData="PageMetaData" Spread="2" SelectedPage="SelectedPage" />
+                        </div>
+                    </div>
+                    <div class="card-body table-responsive p-0" style="height: 250px;">
+                        @if (Applicants.Count > 0)
+                        {
+                            <table class="table table-head-fixed table-hover text-nowrap table-bordered table-clientlist">
+                                <thead style="font-size: 13px; !important;">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email Address</th>
+                                        <th>Phone Number</th>
+                                        <th>Mobile Number</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="font-size: 12px !important;">
+                                    @foreach (var applicant in Applicants)
+                                    {
+                                    <tr @onclick="() => SelectRow(applicant.Id, applicant.ApplicantName,
+                                                      applicant.Address, applicant.EmailAddress, 
+                                                      applicant.PhoneNumber, applicant.MobileNumber)">
+                                        <td class="align-middle">@applicant.ApplicantName</td>
+                                        <td class="align-middle">@applicant.EmailAddress</td>
+                                        <td class="align-middle">@applicant.PhoneNumber</td>
+                                        <td class="align-middle">@applicant.MobileNumber</td>
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button @onclick="Cancel" class="btn btn-outline-light">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

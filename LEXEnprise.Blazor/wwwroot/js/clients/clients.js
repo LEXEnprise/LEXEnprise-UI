@@ -25,4 +25,10 @@ export function initDateAcquiredDatePicker() {
     });
 }
 
+export function OnScrollEvent() {
+    document.documentElement.scrollTop = 0;
+}
+
+
+
 

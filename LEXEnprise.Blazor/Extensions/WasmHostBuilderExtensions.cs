@@ -1,5 +1,6 @@
 ﻿using Blazored.LocalStorage;
 using Blazored.Modal;
+using Blazored.SessionStorage;
 using LEXEnprise.Blazor.Application.Authentication;
 using LEXEnprise.Blazor.Application.Services;
 using LEXEnprise.Blazor.Application.Services.Account;
@@ -30,6 +31,7 @@ namespace LEXEnprise.Blazor.Extensions
         public static WebAssemblyHostBuilder AddServiceHelpers(this WebAssemblyHostBuilder builder)
         {
             builder.Services.AddTransient<ILocalStorageHelper, LocalStorageHelper>();
+            builder.Services.AddTransient<ISessionStorageHelper, SessionStorageHelper>();
             builder.Services.AddScoped<RefreshTokenService>();
             builder.Services.AddScoped<HttpInterceptorService>();
 
@@ -55,6 +57,7 @@ namespace LEXEnprise.Blazor.Extensions
             builder.Services
                 .AddAuthorizationCore()
                 .AddBlazoredLocalStorage()
+                .AddBlazoredSessionStorage()
                 .AddScoped<AuthenticationStateProvider, AuthStateProvider>()
                 .AddAppServices()
                 .AddHttpClientInterceptor();

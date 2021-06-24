@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <Content Remove="Pages\AddClient.razor" />
+    <Content Remove="wwwroot\js\addclient.js" />
   </ItemGroup>
 
   
@@ -19,18 +20,17 @@
 
   <ItemGroup>
     <PackageReference Include="Blazored.Modal" Version="6.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.5" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Infrastructure\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\LEXEnprise.Blazor.Application\LEXEnprise.Blazor.Application.csproj" />
     <ProjectReference Include="..\LEXEnprise.Blazor.Shared\LEXEnprise.Blazor.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\js\" />
   </ItemGroup>
 
 </Project>

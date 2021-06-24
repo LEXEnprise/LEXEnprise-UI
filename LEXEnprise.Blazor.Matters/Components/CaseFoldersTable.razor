@@ -1,0 +1,41 @@
+﻿@if (CaseFolders.Count > 0)
+{
+    <table class="table table-head-fixed table-hover text-nowrap table-bordered table-caseFolderlist">
+        <thead style="font-size: 13px !important;">
+            <tr>
+                <th>Client Name</th>
+                <th>Case Folder Code</th>
+                <th>Supervising Layer</th>
+                <th>Group Code</th>
+                <th>Case Owner</th>
+                <th>Status</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody style="font-size: 12px; !important;">
+            @foreach (var caseFolder in CaseFolders)
+            {
+            <tr>
+                <td class="align-middle">@caseFolder.ClientName</td>
+                <td class="align-middle">@caseFolder.CaseFolderCode</td>
+                <td class="align-middle">@caseFolder.SupervisingLawyer.Fullname</td>
+                <td class="align-middle">@caseFolder.GroupCode</td>
+                <td class="align-middle">@caseFolder.CaseOwner.Fullname</td>
+                <td class="align-middle">@caseFolder.Status</td>
+                <td class="align-middle">
+                    <a href="casefolder/@caseFolder.Id" class="nav-link">
+                        <i class="nav-icon fas fa-edit"></i>
+                    </a>
+                </td>
+                <td class="align-middle">
+                    <a href="#" class="nav-link" @onclick="() => Delete(caseFolder.Id)">
+                        <i class="nav-icon fas fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+

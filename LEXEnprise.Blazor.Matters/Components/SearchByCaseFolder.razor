@@ -1,14 +1,14 @@
 ﻿<div class="input-group input-group-sm" style="width: 250px;">
     <div class="input-group-append">
-        <button @onclick="ShowFilterForm" class="btn btn-default">
+        <button @onclick="ShowCaseFolderFilterForm" class="btn btn-default">
             <i class="fas fa-filter"></i>
         </button>
     </div>
     <input type="text" class="form-control float-right" placeholder="Search"
-           @bind-value="@SearchTerm" />
+           @bind-value="@SearchCaseFolderTerm" />
 
     <div class="input-group-append">
-        <button @onclick="SubmitSearch" class="btn btn-default">
+        <button @onclick="SubmitCaseFolderSearch" class="btn btn-default">
             <i class="fas fa-search"></i>
         </button>
     </div>

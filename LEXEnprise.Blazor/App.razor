@@ -30,14 +30,34 @@
     private List<Assembly> _lazyLoadedAssemblies = new List<Assembly>();
     private IEnumerable<Assembly> _assemblies = null;
 
+    private bool IsClientPage(string targetPath)
+    {
+        return targetPath.Contains("client") ? true : false;
+    }
+
+    private bool IsMatterPage(string targetPath)
+    {
+        return (targetPath.Contains("casefolder") || targetPath.Contains("matter")) ? true : false;
+    }
+
     private async Task OnNavigateAsync(NavigationContext context)
     {
-        var targetPath = context.Path;
-
-        if (targetPath == "clients" || targetPath == "addclient")
+        try
         {
-            _assemblies = await AssemblyLoader.LoadAssembliesAsync(new[] { "LEXEnprise.Blazor.Clients.dll" });
-            _lazyLoadedAssemblies.AddRange(_assemblies);
+            if (IsClientPage(context.Path))
+            {
+                _assemblies = await AssemblyLoader.LoadAssembliesAsync(new[] { "LEXEnprise.Blazor.Clients.dll" });
+                _lazyLoadedAssemblies.AddRange(_assemblies);
+            }
+            else if (IsMatterPage(context.Path))
+            {
+                _assemblies = await AssemblyLoader.LoadAssembliesAsync(new[] { "LEXEnprise.Blazor.Matters.dll" });
+                _lazyLoadedAssemblies.AddRange(_assemblies);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
         }
     }
 }

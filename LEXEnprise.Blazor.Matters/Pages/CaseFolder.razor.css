@@ -1,0 +1,58 @@
+﻿.card-header-actionbuttons {
+    padding-top: 7px;
+    padding-bottom: 5px;
+}
+
+.card-tools-actionbuttons {
+    float: left;
+}
+
+.bt-grp-actionbuttons {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.actionbutton {
+    font-size: 12px !important;
+    height: 30px;
+}
+
+.card-title-space {
+    padding-top: 5px;
+    padding-left: 15px;
+}
+
+@media (min-width: 300px) {
+    .spin-center {
+        margin-left: 47%;
+        margin-top: 55%;
+    }
+}
+
+@media (min-width: 576px) {
+    .spin-center {
+        margin-left: 47%;
+        margin-top: 20%;
+    }
+}
+
+@media (min-width: 768px) {
+    .spin-center {
+        margin-left: 47%;
+        margin-top: 15%;
+    }
+}
+
+@media (min-width: 992px) {
+    .spin-center {
+        margin-left: 47%;
+        margin-top: 25%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .spin-center {
+        margin-left: 47%;
+        margin-top: 15%;
+    }
+}

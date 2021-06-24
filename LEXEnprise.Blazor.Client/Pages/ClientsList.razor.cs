@@ -2,7 +2,7 @@
 using Blazored.Modal.Services;
 using LEXEnprise.Blazor.Application.Models.Clients;
 using LEXEnprise.Blazor.Application.Models.Lookup;
-using LEXEnprise.Blazor.Application.Services.Account;
+using LEXEnprise.Blazor.Application.Services;
 using LEXEnprise.Blazor.Application.Services.Clients;
 using LEXEnprise.Blazor.Application.Services.Lookup;
 using LEXEnprise.Blazor.Clients.Components;

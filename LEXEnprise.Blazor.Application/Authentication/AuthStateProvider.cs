@@ -1,4 +1,5 @@
 ﻿using Blazored.LocalStorage;
+using LEXEnprise.Blazor.Application.Constants;
 using LEXEnprise.Blazor.Application.Models.Account;
 using LEXEnprise.Blazor.Infrastructure.Helpers;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -16,13 +17,13 @@ namespace LEXEnprise.Blazor.Application.Authentication
     public class AuthStateProvider : AuthenticationStateProvider
     {
         private readonly HttpClient _httpClient;
-        private readonly ILocalStorageHelper _localStorage;
+        private readonly ISessionStorageHelper _sessionStorage;
         private readonly AuthenticationState _anonymous;
 
-        public AuthStateProvider(HttpClient httpClient, ILocalStorageHelper localStorage)
+        public AuthStateProvider(HttpClient httpClient, ISessionStorageHelper sessionStorage)
         {
             _httpClient = httpClient;
-            _localStorage = localStorage;
+            _sessionStorage = sessionStorage;
             //create an anonymous user since we are going to use it throughout this class
             _anonymous = new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
         }
@@ -30,7 +31,7 @@ namespace LEXEnprise.Blazor.Application.Authentication
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             //Get token from local storages.
-            var secTokens = await _localStorage.GetItemAsync<SecTokens>("SecTokensKey");
+            var secTokens = await _sessionStorage.GetItemAsync<SecTokens>(StorageKeys.SecTokensKey);
 
             if (secTokens == null)
                 return _anonymous;

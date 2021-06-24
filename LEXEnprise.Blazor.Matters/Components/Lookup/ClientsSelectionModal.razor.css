@@ -1,0 +1,48 @@
+﻿.spinner {
+    display: none;
+    align-items: center;
+}
+
+.card-search {
+    margin-right: 10px !important;
+}
+
+.table-casefolderlist {
+    font-size: 0.75rem !important;
+}
+
+@media (min-width: 300px) {
+    .spin-center {
+        margin-left: 47%;
+        margin-top: 55%;
+    }
+}
+
+@media (min-width: 576px) {
+    .spin-center {
+        margin-left: 47%;
+        margin-top: 20%;
+    }
+}
+
+@media (min-width: 768px) {
+    .spin-center {
+        margin-left: 47%;
+        margin-top: 15%;
+    }
+}
+
+@media (min-width: 992px) {
+    .spin-center {
+        margin-left: 47%;
+        margin-top: 25%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .spin-center {
+        margin-left: 47%;
+        margin-top: 15%;
+    }
+}
+

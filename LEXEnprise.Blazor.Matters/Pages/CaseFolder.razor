@@ -1,0 +1,116 @@
+﻿@page "/casefolder/{casefolderid:int}"
+
+@using LEXEnprise.Blazor.Shared.Components
+
+@attribute [Authorize(Roles = "MISStaff, Paralegal, Lawyer")]
+
+<PageHeader PageTitle=@PageTitle />
+<MainContent>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Case Folder Information</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <EditForm Model="_caseFolderData" style="width: 100%;">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label for="clientNumber">Client Number</label>
+                                        <InputText @bind-Value="_caseFolderData.ClientNumber" class="form-control" placeholder="Client Number" disabled />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="caseFolderCode">Case Folder Code</label>
+                                        <InputText @bind-Value="_caseFolderData.CaseFolderCode" class="form-control" placeholder="Case Folder Code" disabled />
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="form-group">
+                                        <label for="clientName">Client Name</label>
+                                        <InputText @bind-Value="_caseFolderData.ClientName" class="form-control" placeholder="Client Number" disabled />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="caseFolderDesc">Case Folder Description</label>
+                                        <InputText @bind-Value="_caseFolderData.CaseFolderDesc" class="form-control" placeholder="Case Folder Code" disabled />
+                                    </div>
+                                </div>
+                            </div>
+                        </EditForm>
+                    </div>
+                </div>
+                <div class="card card-success">
+                    <div class="card-header" style="padding-top: 7px; padding-bottom: 5px;">
+                        <div class="card-tools"><button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button></div>
+                        <div class="card-tools" style="margin-right: 5px !important; float: left;">
+                            <div class="btn-group" style="margin-top: 2px; margin-bottom: 2px;">
+                                <button type="button" class="btn btn-default btn-flat" style="font-size: 12px !important; height: 30px;">
+                                    Create
+                                </button>
+                                <button type="button" class="btn btn-default btn-flat dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false"
+                                        style="height: 30px;">
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu" role="menu" style="font-size: 12px !important;">
+                                    <a class="dropdown-item" href="addcasefolder">Case Folder</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="addipmatter/@_caseFolderData.Id">IP Matter</a>
+                                    <a class="dropdown-item" href="#">Non-IP Matter</a>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="card-title" style="padding-top: 5px; padding-left: 15px;">
+                            Matters
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        @if (_matters != null && _matters.Count > 0)
+                        {
+                            <table class="table table-head-fixed table-hover text-nowrap table-bordered">
+                                <thead style="font-size: 13px !important;">
+                                    <tr>
+                                        <th>Case Type</th>
+                                        <th>Status</th>
+                                        <th>Matter ID/Code</th>
+                                        <th>Subject Matter</th>
+                                        <th>Filling Date</th>
+                                        <th>Lawyers</th>
+                                        <th>Paralegal</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="font-size: 12px; !important;">
+                                    @foreach (var matter in _matters)
+                                    {
+                                        <tr>
+                                            <td class="align-middle">@matter.CaseType.Type</td>
+                                            <td class="align-middle">@matter.Status.Status</td>
+                                            <td class="align-middle">@matter.MatterCode</td>
+                                            <td class="align-middle">@matter.SubjectMatter</td>
+                                            <td class="align-middle">@matter.FileDate</td>
+                                            <td class="align-middle">
+                                                @if (matter.HandlingLawyers != null && matter.HandlingLawyers.Count > 0)
+                                                {
+                                                    <a href="" class="nav-link" @onclick="() => ShowHandlingLawyers(matter.HandlingLawyers)" @onclick:preventDefault >
+                                                        <i class="nav-icon fas fa-list"></i>
+                                                    </a>
+                                                }
+                                            </td>
+                                            <td class="align-middle">@matter.Paralegal.Fullname</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                </div>
+                <div id="spinner" style="display: block;" class="overlay spinner"><i class="fas fa-2x fa-sync-alt fa-spin spin-center"></i></div>
+            </div>
+        </div>
+    </div>
+</MainContent>

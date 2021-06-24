@@ -1,0 +1,61 @@
+﻿<div class="modal fade show d-block" tabindex="-1" role="dialog">
+    <div class="modal-backdrop fade show" @onclick="Cancel"></div>
+    <div class="modal-dialog" style="z-index: 1050">
+        <!-- Pop it above the backdrop -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@Title</h4>
+                <button type="button" class="close" aria-label="Close" @onclick="Cancel">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <EditForm class="form-horizontal" Model="CaseFolderFilter" OnValidSubmit="SubmitFilter">
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="caseFolderCode" class="col-sm-3 col-form-label">CaseFolderCode</label>
+                        <div class="col-sm-7">
+                            <InputText @bind-Value="CaseFolderFilter.CaseFolderCode" class="form-control" placeholder="CaseFolderCode" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="clientName" class="col-sm-3 col-form-label">Client Name</label>
+                        <div class="col-sm-7">
+                            <InputText @bind-Value="CaseFolderFilter.ClientName" class="form-control" placeholder="Client Name" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="caseGroup" class="col-sm-3 col-form-label">Case Group</label>
+                        <div class="col-sm-7">
+
+                            <InputSelect @bind-Value="CaseFolderFilter.CaseGroupId" class="form-control" placeholder="Case Group">
+                                <option value="0">Select</option>
+                                @foreach (var caseGroup in CaseGroups)
+                                {
+                                    <option value="@caseGroup.Id">@caseGroup.GroupName</option>
+                                }
+                            </InputSelect>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="folderType" class="col-sm-3 col-form-label">Folder Type</label>
+                        <div class="col-sm-7">
+
+                            <InputSelect @bind-Value="CaseFolderFilter.FolderTypeId" class="form-control" placeholder="Folder Type">
+                                <option value="0">Select</option>
+                                @foreach (var folderType in FolderTypes)
+                                {
+                                    <option value="@folderType.Id">@folderType.Type</option>
+                                }
+                            </InputSelect>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button @onclick="Cancel" class="btn btn-outline-light">Cancel</button>
+                    <button type="submit" class="btn btn-outline-light">Save</button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,45 @@
+﻿@page "/casefolders"
+@using LEXEnprise.Blazor.Shared.Components
+@using LEXEnprise.Blazor.Matters.Components
+
+@attribute [Authorize(Roles = "MISStaff, Lawyer")]
+
+<PageHeader PageTitle=@PageTitle BreadCrumbTitle="@BreadCrumbTitle" />
+<MainContent>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tools" style="float: left !important;">
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-append">
+                                <a href="/addcasefolder" class="btn btn-default">
+                                    <i class="fas fa-plus-square"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-tools">
+                        <Pagination MetaData="PageMetaData" Spread="2" SelectedPage="SelectedPage" />
+                    </div>
+                    <div class="card-tools">
+                        <span>&nbsp;</span>
+                    </div>
+                    <div class="card-tools card-search">
+                        <SearchByCaseFolder OnSearchSubmit="SubmitSearchValue" OnShowFilter="ShowFilterModal" />
+                    </div>
+                </div>
+                <div class="card-body table-responsive p-0" style="height: 400px;">
+                    <CaseFoldersTable CaseFolders="CaseFolders" />
+                </div>
+                <div class="card-footer clearfix">
+                    <Pagination MetaData="PageMetaData"
+                                Spread="2"
+                                SelectedPage="SelectedPage" />
+                </div>
+                <div id="spinner" style="display: block;" class="overlay spinner"><i class="fas fa-2x fa-sync-alt fa-spin spin-center"></i></div>
+            </div>
+        </div>
+    </div>
+</MainContent>
+

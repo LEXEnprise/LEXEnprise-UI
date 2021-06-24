@@ -3,8 +3,16 @@
     align-items: center;
 }
 
-.card-search {
-    margin-right: 10px !important;
+.btn_container {
+    position: relative;
+}
+
+.vertical-center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
 }
 
 @media (min-width: 300px) {

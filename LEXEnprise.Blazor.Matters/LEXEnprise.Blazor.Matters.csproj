@@ -1,7 +1,46 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Components\SearchByCaseFolderCode.razor.cs" />
+    <Compile Remove="Pages\AddMatterIntPat.razor.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Components\SearchByCaseFolderCode.razor" />
+    <Content Remove="Pages\AddMatterIntPat.razor" />
+  </ItemGroup>
+
+  
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Blazored.Modal" Version="6.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LEXEnprise.Blazor.Application\LEXEnprise.Blazor.Application.csproj" />
+    <ProjectReference Include="..\LEXEnprise.Blazor.Shared\LEXEnprise.Blazor.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\AddCaseFolder.razor" />
+   <UpToDateCheckInput Remove="Pages\AddMatterIntPat.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\AddCaseFolder.razor" />
+    <_ContentIncludedByDefault Remove="Pages\AddMatterIntPat.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
 
 </Project>

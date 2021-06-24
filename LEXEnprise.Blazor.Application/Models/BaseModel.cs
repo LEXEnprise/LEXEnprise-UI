@@ -9,5 +9,6 @@ namespace LEXEnprise.Blazor.Application.Models
     public abstract class BaseModel
     {
         public int Id { get; set; }
+        public int CreatedBy { get; set; } = 1;
     }
 }

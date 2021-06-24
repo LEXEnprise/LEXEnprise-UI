@@ -24,7 +24,7 @@ namespace LEXEnprise.Blazor.Clients.Components
 
         private void RedirectToUpdate(int id)
         {
-            var url = Path.Combine("/updateClient/", id.ToString());
+            var url = Path.Combine("updateClient/", id.ToString());
             NavigationManager.NavigateTo(url);
         }
 

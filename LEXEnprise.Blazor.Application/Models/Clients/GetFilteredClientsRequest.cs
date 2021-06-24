@@ -1,4 +1,5 @@
-﻿using LEXEnprise.Blazor.Shared.Wrapper;
+﻿using LEXEnprise.Blazor.Application.Models.CaseFolders;
+using LEXEnprise.Blazor.Shared.Wrapper;
 
 namespace LEXEnprise.Blazor.Application.Models.Clients
 {

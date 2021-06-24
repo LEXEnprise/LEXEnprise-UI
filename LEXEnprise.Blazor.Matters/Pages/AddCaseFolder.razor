@@ -1,0 +1,136 @@
+﻿@page "/addcasefolder"
+
+@using LEXEnprise.Blazor.Shared.Components
+
+@attribute [Authorize(Roles = "MISStaff, Paralegal, Lawyer")]
+
+<PageHeader PageTitle=@PageTitle />
+<MainContent>
+    <div class="row">
+        <EditForm Model="_addCaseFolderModel" OnValidSubmit="OnSubmitCaseFolder" OnInvalidSubmit="OnInvalidCaseFolderSubmit" style="width: 100%;">
+            <div class="card">
+                <div class="card-body">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+                    <div class="card card-primary">
+
+                        <div class="card-header">
+                            <h3 class="card-title">Case Folder Information</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="clientName">Client Name</label>
+                                        <div class="input-group">
+                                            <InputText id="@_clientNameId" @bind-Value="_addCaseFolderModel.ClientName" class="form-control" placeholder="Client Name" disabled />
+                                            <span class="input-group-append">
+                                                <button type="button" @onclick="ShowClientsLookup" class="btn btn-default">
+                                                    <i class="fa fa-filter"></i>
+                                                </button>
+                                            </span>
+                                            <ValidationMessage For="@(() => _addCaseFolderModel.ClientName)" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="clientNumber">Client Number</label>
+                                        <InputText @bind-Value="_addCaseFolderModel.ClientNumber" class="form-control" placeholder="Client Number" disabled />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="codeDesc">Case Folder Description</label>
+                                        <InputText id="@_caseFolderDescId" @bind-Value="_addCaseFolderModel.CaseFolderDesc" class="form-control" placeholder="Case Folder Description" />
+                                        <ValidationMessage For="@(() => _addCaseFolderModel.ClientName)" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="caseGroup">Case Group</label>
+                                        <InputSelect @bind-Value="_addCaseFolderModel.CaseGroupId" class="form-control" placeholder="Client Type">
+                                            <option value="0">Select</option>
+
+                                            @foreach (var caseGroup in CaseGroups)
+                                            {
+                                                <option value="@caseGroup.Id">@caseGroup.GroupCode</option>
+                                            }
+                                        </InputSelect>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="supervisingLawyer">Supervising Lawyer</label>
+                                        <div class="input-group">
+                                            <InputText @bind-Value="_addCaseFolderModel.SupervisingLawyer" class="form-control" placeholder="Supervising Lawyer" disabled />
+                                            <span class="input-group-append">
+                                                <button type="button" @onclick="ShowSupervisingLawyersLookup" class="btn btn-default">
+                                                    <i class="fa fa-filter"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="caseOwner">Case Owner</label>
+                                        <div class="input-group">
+                                            <InputText @bind-Value="_addCaseFolderModel.CaseOwner" class="form-control" placeholder="Case Owner" disabled />
+                                            <span class="input-group-append">
+                                                <button type="button" @onclick="ShowCaseOwnerLookup" class="btn btn-default">
+                                                    <i class="fa fa-filter"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-success">
+
+                        <div class="card-header">
+                            <h3 class="card-title">Other Information</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="folderType">Type</label>
+                                        <InputSelect @bind-Value="_addCaseFolderModel.FolderTypeId" class="form-control" placeholder="Folder Type">
+                                            <option value="0">Select</option>
+
+                                            @foreach (var folderType in FolderTypes)
+                                            {
+                                                <option value="@folderType.Id">@folderType.Type</option>
+                                            }
+                                        </InputSelect>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="remarks">Remarks</label>
+                                        <InputTextArea @bind-Value="_addCaseFolderModel.Remarks" class="form-control" rows="4" placeholder="Remarks - (1000 Characters limit.)" />
+                                        <ValidationMessage For="@(() => _addCaseFolderModel.Remarks)" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary float-right" style="margin-left: 5px;">Save</button>
+                    <button type="button" class="btn btn-default float-right" @onclick="Cancel">Cancel</button>
+                </div>
+            </div>
+        </EditForm>
+    </div>
+
+</MainContent>

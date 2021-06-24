@@ -4,10 +4,7 @@ using LEXEnprise.Blazor.Application.Models.Clients;
 using LEXEnprise.Blazor.Application.Models.Lookup;
 using LEXEnprise.Blazor.Application.Services.Lookup;
 using Microsoft.AspNetCore.Components;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace LEXEnprise.Blazor.Clients.Components

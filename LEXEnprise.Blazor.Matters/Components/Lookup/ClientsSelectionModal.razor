@@ -1,0 +1,69 @@
+﻿@using LEXEnprise.Blazor.Shared.Components
+
+<div class="modal fade show d-block" tabindex="-1" role="dialog">
+    <div class="modal-backdrop fade show" @onclick="Cancel"></div>
+    <div class="modal-dialog modal-lg" style="z-index: 1050">
+        <!-- Pop it above the backdrop -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@Title</h4>
+                <button type="button" class="close" aria-label="Close" @onclick="Cancel">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-tools" style="float: left !important; margin-left: -20px !important;">
+                            <SearchByName OnSearchSubmit="SubmitSearchValue" EnableFilter=false />
+                        </div>
+                        <div class="card-tools">
+                            <Pagination MetaData="PageMetaData" Spread="2" SelectedPage="SelectedPage" />
+                        </div>
+                    </div>
+                    <div class="card-body table-responsive p-0" style="height: 250px;">
+                        @if (Clients.Count > 0)
+                        {
+                            <table class="table table-head-fixed table-hover text-nowrap table-bordered table-casefolderlist">
+                                <thead style="font-size: 13px; !important;">
+                                    <tr>
+                                        <th>Client No.</th>
+                                        <th>Name</th>
+                                        <th>Industry</th>
+                                        @*<th>Client Type</th>
+                                    <th>Status</th>
+                                    <th>Account Manager</th>
+                                    <th>Email Address</th>
+                                    <th>Phone Number</th>
+                                    <th>Mobile Number</th>*@
+
+                                    </tr>
+                                </thead>
+                                <tbody style="font-size: 12px; !important;">
+                                    @foreach (var client in Clients)
+                                    {
+                                        <tr @onclick="() => SelectRow(client.Id, client.ClientNumber, client.ClientName)">
+                                            <td class="align-middle">@client.ClientNumber</td>
+                                            <td class="align-middle">@client.ClientName</td>
+                                            <td class="align-middle">@client.Industry.IndustryName</td>
+                                            @*<td class="align-middle">@client.ClientType.ClientTypeName</td>
+                                        <td class="align-middle">@client.Status.Status</td>
+                                        <td class="align-middle">@client.AccountManager.ContactPerson</td>
+                                        <td class="align-middle">@client.Email</td>
+                                        <td class="align-middle">@client.PhoneNumber</td>
+                                        <td class="align-middle">@client.MobileNumber</td>*@
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button @onclick="Cancel" class="btn btn-outline-light">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

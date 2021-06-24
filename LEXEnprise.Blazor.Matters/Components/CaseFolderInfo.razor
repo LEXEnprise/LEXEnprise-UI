@@ -1,0 +1,51 @@
+﻿@using LEXEnprise.Blazor.Application.Models.CaseFolders
+
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">Case Folder Information</h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label for="clientNumber">Client Number</label>
+                    <input value="@CaseFolderDataHolder.ClientNumber" class="form-control" placeholder="Client Number" disabled />
+                </div>
+                <div class="form-group">
+                    <label for="caseFolderCode">Case Folder Code</label>
+                    <input value="@CaseFolderDataHolder.CaseFolderCode" class="form-control" placeholder="Case Folder Code" disabled />
+                </div>
+                <div class="form-group">
+                    <label for="caseFolderCode">Group Code</label>
+                    <input value="@CaseFolderDataHolder.GroupCode" class="form-control" placeholder="Case Folder Code" disabled />
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="form-group">
+                    <label for="clientName">Client Name</label>
+                    <input value="@CaseFolderDataHolder.ClientName" class="form-control" placeholder="Client Number" disabled />
+                </div>
+                <div class="form-group">
+                    <label for="caseFolderDesc">Case Folder Description</label>
+                    <input value="@CaseFolderDataHolder.CaseFolderDesc" class="form-control" placeholder="Case Folder Code" disabled />
+                </div>
+                <div class="form-group">
+                    <label for="caseFolderCode">Supervising Lawyer</label>
+                    <input value="@CaseFolderDataHolder.SupervisingLawyer.Fullname" class="form-control" placeholder="Case Folder Code" disabled />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code
+{
+    [Parameter]
+    public CaseFolder CaseFolderDataHolder { get; set; }
+}
+

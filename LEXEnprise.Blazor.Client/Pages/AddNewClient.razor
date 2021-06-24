@@ -1,222 +1,269 @@
 ﻿@page "/addclient"
 @using LEXEnprise.Blazor.Shared.Components
+@using LEXEnprise.Blazor.Clients.Validations 
 
-@attribute [Authorize(Roles = "MISStaff, Lawyer")]
+@attribute [Authorize(Roles = "MISStaff, Paralegal, Lawyer")]
 
 <PageHeader PageTitle=@PageTitle />
 <MainContent>
     <div class="row">
         <div class="col-md-12">
-            <EditForm Model="_addClientModel" OnValidSubmit="OnValidSubmit">
-                <div class="card-body">
-                    <DataAnnotationsValidator />
-                    <ValidationSummary />
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="card card-info">
-                                <div class="card-header">
-                                    <h3 class="card-title">Basic Information</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="form-group">
-                                        <label for="clientName">Client Name</label>
-                                        <InputText id="@_clientNameId" @bind-Value="_addClientModel.ClientName" class="form-control" placeholder="Client Name" />
-                                        <ValidationMessage For="@(() => _addClientModel.ClientName)" />
+            <EditForm Model="_addClientModel" OnValidSubmit="OnValidSubmit" OnInvalidSubmit="OnInvalidClientSubmit">
+                <div class="card">
+                    <div class="card-body">
+                        <DataAnnotationsValidator />
+                        <AddClientCustomValidation @ref="_addClientValidation" />
+                        <ValidationSummary />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card card-info">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Basic Information</h3>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="clientType">Client Type</label>
-                                        <InputSelect @bind-Value="_addClientModel.ClientTypeId" class="form-control" placeholder="Client Type">
-                                            <option value="0">Select</option>
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="clientName">Client Name</label>
+                                            <InputText id="@_clientNameId" @bind-Value="_addClientModel.ClientName" class="form-control" placeholder="Client Name" />
+                                            <ValidationMessage For="@(() => _addClientModel.ClientName)" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="clientType">Client Type</label>
+                                            <InputSelect @bind-Value="_addClientModel.ClientTypeId" class="form-control" placeholder="Client Type">
+                                                <option value="0">Select</option>
 
-                                            @foreach (var clientType in ClientTypes)
-                                            {
-                                                <option value="@clientType.Id">@clientType.ClientTypeName</option>
-                                            }
-                                        </InputSelect>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="industry">Industry</label>
-                                        <InputSelect @bind-Value="_addClientModel.ClientIndustryId" class="form-control" placeholder="Industry">
-                                            <option value="0">Select</option>
-                                            @foreach (var industry in Industries)
-                                            {
-                                                <option value="@industry.Id">@industry.IndustryName</option>
-                                            }
-                                        </InputSelect>
+                                                @foreach (var clientType in ClientTypes)
+                                                {
+                                                    <option value="@clientType.Id">@clientType.ClientTypeName</option>
+                                                }
+                                            </InputSelect>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="industry">Industry</label>
+                                            <InputSelect @bind-Value="_addClientModel.ClientIndustryId" class="form-control" placeholder="Industry">
+                                                <option value="0">Select</option>
+                                                @foreach (var industry in Industries)
+                                                {
+                                                    <option value="@industry.Id">@industry.IndustryName</option>
+                                                }
+                                            </InputSelect>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card card-success">
-                                <div class="card-header">
-                                    <h3 class="card-title">Contact Information</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="form-group">
-                                        <label for="email">Email Address</label>
-                                        <InputText @bind-Value="_addClientModel.Email" class="form-control" placeholder="Email Address" />
-                                        <ValidationMessage For="@(() => _addClientModel.Email)" />
+                            <div class="col-md-6">
+                                <div class="card card-success">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Contact Information</h3>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="phoneNumber">Phone Number</label>
-                                        <InputText @bind-Value="_addClientModel.PhoneNumber" class="form-control" placeholder="Phone Number" />
-                                        <ValidationMessage For="@(() => _addClientModel.PhoneNumber)" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="mobileNumber">Mobile Number</label>
-                                        <InputText @bind-Value="_addClientModel.MobileNumber" class="form-control" placeholder="Mobile Number" />
-                                        <ValidationMessage For="@(() => _addClientModel.MobileNumber)" />
-                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="email">Email Address</label>
+                                            <InputText @bind-Value="_addClientModel.Email" class="form-control" placeholder="Email Address" />
+                                            <ValidationMessage For="@(() => _addClientModel.Email)" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="phoneNumber">Phone Number</label>
+                                            <InputText @bind-Value="_addClientModel.PhoneNumber" class="form-control" placeholder="Phone Number" />
+                                            <ValidationMessage For="@(() => _addClientModel.PhoneNumber)" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="mobileNumber">Mobile Number</label>
+                                            <InputText @bind-Value="_addClientModel.MobileNumber" class="form-control" placeholder="Mobile Number" />
+                                            <ValidationMessage For="@(() => _addClientModel.MobileNumber)" />
+                                        </div>
 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card card-info">
-                                <div class="card-header">
-                                    <h3 class="card-title">Address Information</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="form-group">
-                                        <label for="address1">Address 1</label>
-                                        <InputText @bind-Value="_addClientModel.Address1" class="form-control" placeholder="Address 1" />
-                                        <ValidationMessage For="@(() => _addClientModel.Address1)" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="address2">Address 2</label>
-                                        <InputText @bind-Value="_addClientModel.Address2" class="form-control" placeholder="Address 2" />
-                                        <ValidationMessage For="@(() => _addClientModel.Address2)" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="country">Country</label>
-                                        <select value="@_addClientModel.CountryId" @onchange="OnChangeCountry" class="form-control" placeholder="Country">
-                                            <option value="0">Select</option>
-                                            @foreach (var country in Countries)
-                                            {
-                                                <option value="@country.Id">@country.CountryName</option>
-                                            }
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="state">State/Province</label>
-                                        <select id="@_selectStatesId" value="@_addClientModel.StateId" @onchange="OnChangeState" class="form-control" placeholder="State/Province">
-                                            <option value="0">Select</option>
-                                            @foreach (var state in States)
-                                            {
-                                                <option value="@state.Id">@state.StateName</option>
-                                            }
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="city">City</label>
-                                        <InputSelect id="@_selectCitiesId" @bind-Value="_addClientModel.CityId" class="form-control" placeholder="City">
-                                            <option value="0">Select</option>
-                                            @foreach (var city in Cities)
-                                            {
-                                                <option value="@city.Id">@city.CityName</option>
-                                            }
-                                        </InputSelect>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="zipCode">ZipCode</label>
-                                        <InputText @bind-Value="_addClientModel.ZipCode" class="form-control" placeholder="ZipCode" />
-                                        <ValidationMessage For="@(() => _addClientModel.ZipCode)" />
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card card-success">
-                                <div class="card-header">
-                                    <h3 class="card-title">Other Information</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="form-group">
-                                        <label for="website">Web-Site</label>
-                                        <InputText @bind-Value="_addClientModel.Website" class="form-control" placeholder="Web-Site" />
-                                        <ValidationMessage For="@(() => _addClientModel.Website)" />
+                            <div class="col-md-6">
+                                <div class="card card-info">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Address Information</h3>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>Date Acquired:</label>
-                                                <InputDate @bind-Value="_addClientModel.DateAcquired" class="form-control" placeholder="Date Acquired" />
-                                                <ValidationMessage For="@(() => _addClientModel.DateAcquired)" />
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="address1">Address 1</label>
+                                            <InputText @bind-Value="_addClientModel.Address1" class="form-control" placeholder="Address 1" />
+                                            <ValidationMessage For="@(() => _addClientModel.Address1)" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="address2">Address 2</label>
+                                            <InputText @bind-Value="_addClientModel.Address2" class="form-control" placeholder="Address 2" />
+                                            <ValidationMessage For="@(() => _addClientModel.Address2)" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="country">Country</label>
+                                            <select value="@_addClientModel.CountryId" @onchange="OnChangeCountry" class="form-control" placeholder="Country">
+                                                <option value="0">Select</option>
+                                                @foreach (var country in Countries)
+                                                {
+                                                    <option value="@country.Id">@country.CountryName</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="state">State/Province</label>
+                                            <select id="@_selectStatesId" value="@_addClientModel.StateId" @onchange="OnChangeState" class="form-control" placeholder="State/Province">
+                                                <option value="0">Select</option>
+                                                @foreach (var state in States)
+                                                {
+                                                    <option value="@state.Id">@state.StateName</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="city">City</label>
+                                            <InputSelect id="@_selectCitiesId" @bind-Value="_addClientModel.CityId" class="form-control" placeholder="City">
+                                                <option value="0">Select</option>
+                                                @foreach (var city in Cities)
+                                                {
+                                                    <option value="@city.Id">@city.CityName</option>
+                                                }
+                                            </InputSelect>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="zipCode">ZipCode</label>
+                                            <InputText @bind-Value="_addClientModel.ZipCode" class="form-control" placeholder="ZipCode" />
+                                            <ValidationMessage For="@(() => _addClientModel.ZipCode)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card card-success">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Other Information</h3>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="website">Web-Site</label>
+                                            <InputText @bind-Value="_addClientModel.Website" class="form-control" placeholder="Web-Site" />
+                                            <ValidationMessage For="@(() => _addClientModel.Website)" />
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Date Acquired</label>
+                                                    <InputDate @bind-Value="_addClientModel.DateAcquired" class="form-control" placeholder="Date Acquired" />
+                                                    <ValidationMessage For="@(() => _addClientModel.DateAcquired)" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="billingCurrency">Billing Currency</label>
+                                                    <InputSelect @bind-Value="_addClientModel.BillingCurrencyId" class="form-control" placeholder="Billing Currency">
+                                                        <option value="0">Select</option>
+                                                        @foreach (var currency in Currencies)
+                                                        {
+                                                            <option value="@currency.Id">@currency.CurrencyCode</option>
+                                                        }
+                                                    </InputSelect>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label for="billingCurrency">Billing Currency</label>
-                                                <InputSelect @bind-Value="_addClientModel.BillingCurrencyId" class="form-control" placeholder="Billing Currency">
-                                                    <option value="0">Select</option>
-                                                    @foreach (var currency in Currencies)
+                                        <div class="form-group">
+                                            <label for="remarks">Remarks</label>
+                                            <InputTextArea @bind-Value="_addClientModel.Remarks" class="form-control" rows="10" placeholder="Remarks - (1000 Characters limit.)" />
+                                            <ValidationMessage For="@(() => _addClientModel.Remarks)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card card-success">
+                                    <div class="card-header">
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                        </div>
+                                        <div class="card-tools" style="margin-right: 5px !important; float: left;">
+                                            <div class="input-group input-group-sm">
+                                                <div class="input-group-append">
+                                                    <a href="" class="btn btn-default" @onclick="() => ShowAddContactModal()" @onclick:preventDefault>
+                                                        <i class="fas fa-plus-square"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <h3 class="card-title" style="padding-top: 5px; padding-left: 15px;">
+                                            Contacts
+                                        </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table table-head-fixed table-hover text-nowrap table-bordered">
+                                            <thead style="font-size: 13px !important;">
+                                                <tr>
+                                                    <th>ContactPerson</th>
+                                                    <th>Email Address</th>
+                                                    <th>Phone Number</th>
+                                                    <th>Mobile Number</th>
+                                                    <th>Position</th>
+                                                    <th>Is Main Officer?</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody @ref="_clientContactsRowRef" style="font-size: 12px !important;">
+                                                @if (_addClientModel.Contacts.Count > 0)
+                                                {
+                                                    foreach (var contact in _addClientModel.Contacts)
                                                     {
-                                                        <option value="@currency.Id">@currency.CurrencyCode</option>
+                                                <tr>
+                                                    <td class="align-middle">@contact.ContactPerson</td>
+                                                    <td class="align-middle">@contact.Email</td>
+                                                    <td class="align-middle">@contact.PhoneNumber</td>
+                                                    <td class="align-middle">@contact.Mobile</td>
+                                                    <td class="align-middle">@contact.Position</td>
+                                                    @if (@contact.IsMainAccountOfficer == true)
+                                                    {
+                                                        <td class="align-middle">Yes</td>
                                                     }
-                                                </InputSelect>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="remarks">Remarks</label>
-                                        <InputTextArea @bind-Value="_addClientModel.Remarks" class="form-control" rows="10" placeholder="Remarks - (1000 Characters limit.)" />
-                                        <ValidationMessage For="@(() => _addClientModel.Remarks)" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card card-info">
-                                <div class="card-header">
-                                    <h3 class="card-title">Main Contact Information</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="accountOfficer">Full Name</label>
-                                                <InputText @bind-Value="_addClientModel.MainAccountOfficer" class="form-control" placeholder="Full Name" />
-                                                <ValidationMessage For="@(() => _addClientModel.MainAccountOfficer)" />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="accountOfficerEmail">Email Address</label>
-                                                <InputText @bind-Value="_addClientModel.MainAccountOfficerEmail" class="form-control" placeholder="Main Account Officer" />
-                                                <ValidationMessage For="@(() => _addClientModel.MainAccountOfficerEmail)" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <label for="accountOfficerPhoneNumber">Phone Number</label>
-                                                    <InputText @bind-Value="_addClientModel.MainAccountOfficerPhoneNumber" class="form-control" placeholder="Phone Number" />
-                                                    <ValidationMessage For="@(() => _addClientModel.MainAccountOfficerPhoneNumber)" />
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <label for="accountOfficerMobileNumber">Mobile Number</label>
-                                                        <InputText @bind-Value="_addClientModel.MainAccountOfficerMobileNumber" class="form-control" placeholder="Mobile Number" />
-                                                        <ValidationMessage For="@(() => _addClientModel.MainAccountOfficerMobileNumber)" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="accountOfficerPosition">Position</label>
-                                                <InputText @bind-Value="_addClientModel.MainAccountOfficerPosition" class="form-control" placeholder="Position" />
-                                                <ValidationMessage For="@(() => _addClientModel.MainAccountOfficerPosition)" />
-                                            </div>
-                                        </div>
+                                                    else
+                                                    {
+                                                        <td class="align-middle">No</td>
+                                                    }
+                                                    <td class="align-middle">
+                                                        <a href="#" class="nav-link" @onclick="() => DeleteContact(contact.Email)" @onclick:preventDefault>
+                                                            <i class="nav-icon fas fa-trash"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
-                </div>
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <button type="submit" class="btn btn-default float-right" @onclick="Cancel">Cancel</button>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary float-right" style="margin-left: 5px;">Submit</button>
+                        <button type="submit" class="btn btn-default float-right" @onclick="Cancel">Cancel</button>
+                    </div>
                 </div>
             </EditForm>
         </div>

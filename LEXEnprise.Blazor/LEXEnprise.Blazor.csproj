@@ -5,12 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\TestPages\**" />
     <Compile Remove="wwwroot\css\bootstrap\**" />
     <Compile Remove="wwwroot\css\open-iconic\**" />
+    <Content Remove="Pages\TestPages\**" />
     <Content Remove="wwwroot\css\bootstrap\**" />
     <Content Remove="wwwroot\css\open-iconic\**" />
+    <EmbeddedResource Remove="Pages\TestPages\**" />
     <EmbeddedResource Remove="wwwroot\css\bootstrap\**" />
     <EmbeddedResource Remove="wwwroot\css\open-iconic\**" />
+    <None Remove="Pages\TestPages\**" />
     <None Remove="wwwroot\css\bootstrap\**" />
     <None Remove="wwwroot\css\open-iconic\**" />
   </ItemGroup>
@@ -33,6 +37,7 @@
 
   <ItemGroup>
     <BlazorWebAssemblyLazyLoad Include="LEXEnprise.Blazor.Clients.dll" />
+    <BlazorWebAssemblyLazyLoad Include="LEXEnprise.Blazor.Matters.dll" />
   </ItemGroup>
   
   <ItemGroup>
@@ -49,6 +54,7 @@
   <ItemGroup>
     <ProjectReference Include="..\LEXEnprise.Blazor.Application\LEXEnprise.Blazor.Application.csproj" />
     <ProjectReference Include="..\LEXEnprise.Blazor.Client\LEXEnprise.Blazor.Clients.csproj" />
+    <ProjectReference Include="..\LEXEnprise.Blazor.Matters\LEXEnprise.Blazor.Matters.csproj" />
     <ProjectReference Include="..\LEXEnprise.Blazor.Shared\LEXEnprise.Blazor.Shared.csproj" />
   </ItemGroup>
 

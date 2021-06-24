@@ -22,7 +22,7 @@ namespace LEXEnprise.Blazor.Pages.Accounts
         {
             if (firstRender)
             {
-                _jsModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "/js/login.js");
+                _jsModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "/js/common.js");
             }
         }
 
@@ -37,6 +37,13 @@ namespace LEXEnprise.Blazor.Pages.Accounts
             if (_jsModule != null)
                 await _jsModule.InvokeVoidAsync("hideSpinner", "spinner");
         }
+
+        private async Task HideForm()
+        {
+            if (_jsModule != null)
+                await _jsModule.InvokeVoidAsync("hideElement", "login");
+        }
+
         private async void OnValidSubmit()
         {
             await DisplaySpinner();
@@ -46,7 +53,7 @@ namespace LEXEnprise.Blazor.Pages.Accounts
 
                 if (result.Succeeded)
                 {
-                    await HideSpinner();
+                    await HideForm();
                     NavigationManager.NavigateTo("/");
                 }
 

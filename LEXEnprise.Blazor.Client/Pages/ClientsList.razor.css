@@ -11,11 +11,12 @@
     font-size: 0.75rem !important;
 }
 
-@media (min-width: 300px) {
+@media (min-width: 320px) {
     .spin-center {
         margin-left: 47%;
         margin-top: 55%;
     }
+    
 }
 
 @media (min-width: 576px) {
