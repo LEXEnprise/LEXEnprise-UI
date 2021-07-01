@@ -385,5 +385,28 @@ namespace LEXEnprise.Blazor.Application.Services.Lookup
 
             return applicationTypes;
         }
+
+        public async Task<List<ClientCategory>> GetClientCategories()
+        {
+            //var applicationTypes = await _localStorage.GetItemAsync<List<ApplicationType>>(ApplicationTypesKey);
+
+            //if (applicationTypes == null)
+            //{
+            //    var response = await _httpClient.GetAsync(LookupsEndpoint.GetApplicationTypes);
+            //    var result = await response.ToResult<List<ApplicationType>>();
+
+            //    applicationTypes = result.Data;
+            //    await _localStorage.SetItemAsync<List<ApplicationType>>(ApplicationTypeKey, applicationTypes);
+            //}
+
+            //return applicationTypes;
+
+            var response = await _httpClient.GetAsync(LookupsEndpoint.GetClientCategories);
+            var result = await response.ToResult<List<ClientCategory>>();
+
+            var categories = result.Data;
+
+            return categories;
+        }
     }
 }

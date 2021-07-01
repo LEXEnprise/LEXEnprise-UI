@@ -1,5 +1,6 @@
 ﻿using LEXEnprise.Blazor.Application.Models.Matters;
 using LEXEnprise.Blazor.Matters.ViewModels;
+using LEXEnprise.Blazor.Shared.Enums;
 using System;
 
 namespace LEXEnprise.Blazor.Matters.Mapping
@@ -36,15 +37,25 @@ namespace LEXEnprise.Blazor.Matters.Mapping
                 NatureOfCase = "Nature Of Case",
                 SubjectMatter = "Subject Matter",
                 ParalegalId = 4,
-                DocketNumber = "Docket No1",
+                DocketNumber = "Docket No3",
                 MatterStageId = 5,
                 StageAsOfDate = DateTime.Now,
                 StatusId = 5,
-                FileNumber = "FileNo1",
+                FileNumber = "FileNo3",
                 FileDate = DateTime.Now,
-                ClientReference = "Client 1"
+                ClientReference = "ClientRef3"
 
             };
+
+            foreach (var handlingLawyer in source.HandlingLawyers)
+            {
+                request.Matter.HandlingLawyers.Add(new MatterHandlingLawyer
+                {
+                    LawyerId = handlingLawyer.LawyerId,
+                    IsMainLawyer = handlingLawyer.IsMainLawyer,
+                    Action = handlingLawyer.Action
+                });
+            }
 
             request.OtherInfo = new IPMatterOtherInfo
             {
@@ -73,21 +84,21 @@ namespace LEXEnprise.Blazor.Matters.Mapping
                 ApplicantId = 1,
                 ApplicantName = "Applicant 1",
                 ApplicationTypeId = 4,
-                ApplicationNumber = "ApplicationNumber",
+                ApplicationNumber = "ApplicationNumber3",
                 ApplicationDate = DateTime.Now,
                 PublicationDate = DateTime.Now,
-                CertificateNumber = "CertificateNumber",
+                CertificateNumber = "CertificateNumber3",
                 CertificateDate = DateTime.Now,
-                PCTApplicationNumber = "PCTApplicationNumber",
+                PCTApplicationNumber = "PCTApplicationNumber3",
                 PCTApplicationDate = DateTime.Now,
-                PCTLanguageNumber = "PCTLanguageNumber",
+                PCTLanguageNumber = "PCTLanguageNumber3",
                 PCTLanguageDate = DateTime.Now,
-                PCTPublicationNumber = "PCTPublicationNumber",
+                PCTPublicationNumber = "PCTPublicationNumber3",
                 PCTPublicationDate = DateTime.Now,
-                PriorityNumber = "PriorityNumber",
+                PriorityNumber = "PriorityNumber3",
                 PriorityDate = DateTime.Now,
                 PriorityCountryFilingId = 1,
-                DateWithdrawn = DateTime.Now,
+                DateWithdrawn = null,
                 ReasonOfWithdrawn = null,
                 RenewalDate = null,
                 RenewalDau = null,

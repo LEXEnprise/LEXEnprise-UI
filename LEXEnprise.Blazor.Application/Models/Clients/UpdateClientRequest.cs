@@ -1,16 +1,23 @@
 ﻿using LEXEnprise.Blazor.Application.Constants;
+using LEXEnprise.Blazor.Application.Models.Lookup;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace LEXEnprise.Blazor.Application.Models.Clients
 {
-    public class AddClientRequest
+    public class UpdateClientRequest
     {
+        public int Id { get; set; }
+
+        public string ClientNumber { get; set; }
+
         [Required]
         [MaxLength(128)]
         [StringLength(128, ErrorMessage = "ClientName is too long. (128 Characters Limit)")]
         public string ClientName { get; set; }
+
+        public string UnitDescription { get; set; }
 
         [MaxLength(128)]
         [StringLength(128, ErrorMessage = "Address1 is too long. (128 Characters Limit)")]
@@ -18,7 +25,6 @@ namespace LEXEnprise.Blazor.Application.Models.Clients
         [MaxLength(128)]
         [StringLength(128, ErrorMessage = "Address2 is too long. (128 Characters Limit)")]
         public string Address2 { get; set; }
-
 
         public int CityId { get; set; } = 0;
 
@@ -31,6 +37,7 @@ namespace LEXEnprise.Blazor.Application.Models.Clients
         public string ZipCode { get; set; }
 
         public int ClientIndustryId { get; set; } = 0;
+        public int ClientCategoryId { get; set; } = 0;
 
         [MaxLength(128)]
         public string Website { get; set; }
@@ -50,7 +57,9 @@ namespace LEXEnprise.Blazor.Application.Models.Clients
         public string Email { get; set; }
 
         public int BillingCurrencyId { get; set; } = LookupConstants.DEF_BILLINGCURRENCY;
-        public int ClientCategoryId { get; set; }
+        public int? ClientStatusId { get; set; }
+        public ClientStatus Status { get; set; }
+        public int? AccountManagerId { get; set; }
 
         [Required(ErrorMessage = "Date Acquired is required")]
         public DateTime DateAcquired { get; set; }

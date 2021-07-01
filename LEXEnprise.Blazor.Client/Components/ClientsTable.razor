@@ -30,13 +30,13 @@
                     <td class="align-middle">@client.Status.Status</td>
                     <td class="align-middle">@client.AccountManager.ContactPerson</td>
                     <td class="align-middle">
-                        <a href="#" class="nav-link" @onclick="() => RedirectToUpdate(client.Id)">
+                        <a href="updateclient/@client.Id" class="nav-link">
                             <i class="nav-icon fas fa-edit"></i>
                         </a>
                         <!-- <button type="button" class="btn btn-info" @onclick="() => RedirectToUpdate(client.Id)">Update</button>-->
                     </td>
                     <td class="align-middle">
-                        <a href="#" class="nav-link" @onclick="() => RedirectToUpdate(client.Id)">
+                        <a href="#" class="nav-link" @onclick="() => Delete(client.Id)">
                             <i class="nav-icon fas fa-trash"></i>
                         </a>
                         <!-- <button type="button" class="btn btn-danger" @onclick="() => Delete(client.Id)">Delete</button>-->

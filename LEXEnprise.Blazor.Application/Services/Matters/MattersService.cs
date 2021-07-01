@@ -28,7 +28,7 @@ namespace LEXEnprise.Blazor.Application.Services.Matters
             }
             catch (Exception ex)
             {
-                return null;
+                 return null;
             }
         }
     }

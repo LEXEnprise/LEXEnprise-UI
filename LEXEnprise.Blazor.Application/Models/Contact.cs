@@ -30,5 +30,6 @@ namespace LEXEnprise.Blazor.Application.Models
         public string Remarks { get; set; }
 
         public bool? IsMainAccountOfficer { get; set; } = false;
+        public short Action { get; set; } = 0;
     }
 }

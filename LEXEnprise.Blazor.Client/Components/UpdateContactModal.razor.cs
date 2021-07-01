@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace LEXEnprise.Blazor.Clients.Components
 {
-    public partial class AddContactModal
+    public partial class UpdateContactModal
     {
         [CascadingParameter]
         public BlazoredModalInstance BlazoredModal { get; set; }
@@ -18,48 +18,48 @@ namespace LEXEnprise.Blazor.Clients.Components
         [Parameter]
         public string Title { get; set; }
 
-        private Contact _contact { get; set; }
+        [Parameter]
+        public Contact ContactInfo { get; set; }
 
         [Parameter]
         public List<Contact> Contacts { get; set; } = new List<Contact>();
 
         private bool _isMainAccountOfficer = false;
 
-        private CommonCustomValidation _addContactValidation;
-        protected override void OnInitialized()
+        private CommonCustomValidation _updateContactValidation;
+        protected override async Task OnParametersSetAsync()
         {
-            _contact = new Contact()
-            {
-                Action = DataActions.Add
-            };
+            _isMainAccountOfficer = ContactInfo.IsMainAccountOfficer ?? false;
         }
 
         private bool IsValidContact()
         {
-            _addContactValidation.ClearErrors();
+            _updateContactValidation.ClearErrors();
             var errors = new Dictionary<string, List<string>>();
 
-            if ((_contact.IsMainAccountOfficer == true) &&
-                (Contacts.Any(c => c.IsMainAccountOfficer == true)))
+            if ((ContactInfo.IsMainAccountOfficer == true) &&
+                (Contacts.Any(c => c.IsMainAccountOfficer == true && c.Id != ContactInfo.Id)))
             {
-                errors.Add(nameof(_contact),
+                errors.Add(nameof(ContactInfo),
                     new() { "There is an existing Main Account Officer already." });
             }
 
             if (errors.Count > 0)
             {
-                _addContactValidation.DisplayErrors(errors);
+                _updateContactValidation.DisplayErrors(errors);
                 return false;
             }
 
             return true;
         }
 
-        private async Task AddContact()
+        private async Task SaveContact()
         {
-            _contact.IsMainAccountOfficer = _isMainAccountOfficer;
+            ContactInfo.IsMainAccountOfficer = _isMainAccountOfficer;
+           
+
             if (IsValidContact())
-                await BlazoredModal.CloseAsync(ModalResult.Ok(_contact));
+                await BlazoredModal.CloseAsync(ModalResult.Ok(ContactInfo));
         }
 
         private async Task Cancel() => await BlazoredModal.CancelAsync();

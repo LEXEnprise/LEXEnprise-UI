@@ -82,7 +82,7 @@ namespace LEXEnprise.Blazor.Matters.Components.Lookup
         {
             if (firstRender)
             {
-                _jsModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "/js/commons.js");
+                _jsModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "/js/common.js");
             }
         }
 

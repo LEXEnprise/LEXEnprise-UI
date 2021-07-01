@@ -1,4 +1,5 @@
 ﻿using LEXEnprise.Blazor.Application.Models.Lookup.Matters;
+using LEXEnprise.Blazor.Shared.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,8 @@ namespace LEXEnprise.Blazor.Application.Models.Matters
     {
         public int MatterId { get; set; }
         public int LawyerId { get; set; }
-        public bool? IsMainLawyer { get; set; }
-        public bool IsNew { get; set; } = false;
+        public bool IsMainLawyer { get; set; } = false;
+        public short Action { get; set; } = DataActions.None;
 
         public Matter Matter { get; set; }
         public Lawyer HandlingLawyer { get; set; }

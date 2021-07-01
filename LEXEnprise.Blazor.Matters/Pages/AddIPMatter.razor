@@ -40,10 +40,15 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="accountOfficer">Full Name</label>
+                                        <label for="docketNumber">Docket Number</label>
                                         <InputText @bind-Value="_addIPMatterModel.DocketNumber" class="form-control" placeholder="Docket Number" />
                                         <ValidationMessage For="@(() => _addIPMatterModel.DocketNumber)" />
                                     </div>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="natureOfCase">Nature Of Case</label>
+                                    <InputTextArea @bind-Value="_addIPMatterModel.NatureOfCase" class="form-control" rows="2" placeholder="Nature Of Case - (100 Characters limit.)" />
+                                    <ValidationMessage For="@(() => _addIPMatterModel.NatureOfCase)" />
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label for="subjectMatter">Subject Matter</label>
@@ -137,6 +142,8 @@
                                     <tr>
                                         <th>Name</th>
                                         <th>Email Address</th>
+                                        <th>Main?</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody @ref="_handlingLawyersRowRef" style="font-size: 12px !important;">
@@ -147,24 +154,32 @@
                                             <tr>
                                                 <td class="align-middle">@lawyer.HandlingLawyer.Fullname</td>
                                                 <td class="align-middle">@lawyer.HandlingLawyer.EmailAddress</td>
+                                                <td class="align-middle">
+                                                    <InputCheckbox @bind-Value="lawyer.IsMainLawyer" @onclick="() => CheckMainLawyer(lawyer)" />
+                                                </td>
+                                                <td class="align-middle">
+                                                    <a href="#" class="nav-link" @onclick="() => DeleteLawyer(lawyer.HandlingLawyer.Fullname, lawyer.LawyerId)" @onclick:preventDefault>
+                                                        <i class="nav-icon fas fa-trash"></i>
+                                                    </a>
+                                                </td>
                                             </tr>
                                         }
                                     }
                                     @*else
-                                    {
-                                        <tr>
-                                            <td class="align-middle">Lawyer 1</td>
-                                            <td class="align-middle">lawyer1@gmail.com</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="align-middle">Lawyer 2</td>
-                                            <td class="align-middle">lawyer2@gmail.com</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="align-middle">Lawyer 3</td>
-                                            <td class="align-middle">lawyer3@gmail.com</td>
-                                        </tr>
-                                    }*@
+                                        {
+                                            <tr>
+                                                <td class="align-middle">Lawyer 1</td>
+                                                <td class="align-middle">lawyer1@gmail.com</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="align-middle">Lawyer 2</td>
+                                                <td class="align-middle">lawyer2@gmail.com</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="align-middle">Lawyer 3</td>
+                                                <td class="align-middle">lawyer3@gmail.com</td>
+                                            </tr>
+                                        }*@
                                 </tbody>
                             </table>
                         </div>
@@ -259,7 +274,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="pctLanguageNumber">PCTLanguage Number</label>
-                                        <InputText @bind-Value="_addIPMatterModel.PCTLanguageNumber" class="form-control" placeholder="PCTApplication Number" />
+                                        <InputText @bind-Value="_addIPMatterModel.PCTLanguageNumber" class="form-control" placeholder="PCTLanguage Number" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -299,7 +314,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="priorityCountryFiling">Country Filing</label>
-                                            <InputSelect @bind-Value="_addIPMatterModel.PriorityCountryFilingId" class="form-control" placeholder="Country Filing">
+                                            <InputSelect id="selectPriorityCountryFilingId" @bind-Value="_addIPMatterModel.PriorityCountryFilingId" class="form-control" placeholder="Country Filing">
                                                 <option value="0">Select</option>
                                                 @foreach (var country in Countries)
                                                 {
@@ -309,7 +324,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row col-md-12">
+                                @*<div class="row col-md-12">
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="dateWithdrawn">Date Withdrawn</label>
@@ -330,7 +345,7 @@
                                             <InputTextArea @bind-Value="_addIPMatterModel.ReasonOfWithdrawn" class="form-control" rows="3" placeholder="Reason Of Withdrawn - (100 Characters limit.)" />
                                         </div>
                                     </div>
-                                </div>
+                                </div>*@
                             </div>
                         </div>
                     </div>

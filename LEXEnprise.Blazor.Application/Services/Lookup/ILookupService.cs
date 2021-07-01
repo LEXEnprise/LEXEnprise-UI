@@ -30,5 +30,6 @@ namespace LEXEnprise.Blazor.Application.Services.Lookup
         Task<List<Paralegal>> GetParalegals(int caseGroupId);
         Task<PaginatedResult<GetApplicantResponse>> GetPaginatedApplicants(GetApplicantsRequest request);
         Task<List<ApplicationType>> GetApplicationTypes();
+        Task<List<ClientCategory>> GetClientCategories();
     }
 }

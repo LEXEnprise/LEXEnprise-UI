@@ -85,9 +85,7 @@ namespace LEXEnprise.Blazor.Extensions
             foreach (var type in types)
             {
                 if (appServices.IsAssignableFrom(type.Service))
-                {
                     services.AddScoped(type.Service, type.Implementation);
-                }
             }
 
             return services;

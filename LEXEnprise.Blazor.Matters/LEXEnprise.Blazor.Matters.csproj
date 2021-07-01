@@ -12,6 +12,7 @@
   <ItemGroup>
     <Content Remove="Components\SearchByCaseFolderCode.razor" />
     <Content Remove="Pages\AddMatterIntPat.razor" />
+    <Content Remove="wwwroot\js\ipMatter.js" />
   </ItemGroup>
 
   

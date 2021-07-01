@@ -25,6 +25,7 @@ namespace LEXEnprise.Blazor.Application.Routes
         public static string GetParalegals = "v1/lookup/paralegals";
         public static string GetApplicationTypes = "v1/lookup/applicationtypes";
         public static string GetLawyersByGroup = "v1/lookup/lawyersbygroup";
+        public static string GetClientCategories = "v1/lookup/clientcategories";
         public static string GetPagedLawyers(int pageNumber, int pageSize,
             string searchString, string sortString)
         {
@@ -59,6 +60,8 @@ namespace LEXEnprise.Blazor.Application.Routes
         //public static string GetParalegals = "lookup-service/paralegals";
         //public static string GetApplicationTypes = "lookup-service/applicationtypes";
         //public static string GetLawyersByGroup = "lookup-service/lawyersbygroup";
+        //public static string GetClientCategories = "lookup-service/clientcategories";
+
         //public static string GetPagedLawyers(int pageNumber, int pageSize,
         //    string searchString, string sortString)
         //{

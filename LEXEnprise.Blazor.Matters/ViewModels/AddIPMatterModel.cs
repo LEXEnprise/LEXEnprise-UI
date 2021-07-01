@@ -15,22 +15,22 @@ namespace LEXEnprise.Blazor.Matters.ViewModels
         public int ClientId { get; set; }
         public int CaseFolderId { get; set; }
         public string CaseFolderCode { get; set; }
-        [Required(ErrorMessage = "Case Type is required.")]
+        //[Required(ErrorMessage = "Case Type is required.")]
         public int CaseTypeId { get; set; }
-        [Required(ErrorMessage = "Nature Of Case is required.")]
+        //[Required(ErrorMessage = "Nature Of Case is required.")]
         [MaxLength(100, ErrorMessage = "Nature Of Case is too long. (100 characters limit)")]
         public string NatureOfCase { get; set; }
-        [Required(ErrorMessage = "Subject Matter is required.")]
+        //[Required(ErrorMessage = "Subject Matter is required.")]
         [MaxLength(100, ErrorMessage = "Subject Matter is too long. (100 characters limit)")]
         public string SubjectMatter { get; set; }
-        [Required(ErrorMessage = "Paralegal is required.")]
+        //[Required(ErrorMessage = "Paralegal is required.")]
         public int ParalegalId { get; set; }
-        [Required(ErrorMessage = "DocketNumber is required.")]
+        //[Required(ErrorMessage = "DocketNumber is required.")]
         public string DocketNumber { get; set; }
-        [Required(ErrorMessage = "Matter Stage is required.")]
+        //[Required(ErrorMessage = "Matter Stage is required.")]
         public int MatterStageId { get; set; }
         public DateTime? StageAsOfDate { get; set; }
-        [Required(ErrorMessage = "Status is required.")]
+        //[Required(ErrorMessage = "Status is required.")]
         public int StatusId { get; set; }
         public string FileNumber { get; set; }
         public DateTime? FileDate { get; set; }
@@ -42,7 +42,7 @@ namespace LEXEnprise.Blazor.Matters.ViewModels
 
         #region Other IP Info
         public int ApplicantId { get; set; }
-        [Required(ErrorMessage = "Applicant is required.")]
+        //[Required(ErrorMessage = "Applicant is required.")]
         public string ApplicantName { get; set; }
         public int ApplicationTypeId { get; set; }
         public string ApplicationNumber { get; set; }

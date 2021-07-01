@@ -65,5 +65,39 @@ namespace LEXEnprise.Blazor.Application.Services.Clients
                 throw;
             }
         }
+
+        public async Task<IResult<GetClientResponse>> Get(int clientId)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"{Routes.ClientsEndpoint.Get}/{clientId}");
+
+                if (response.IsSuccessStatusCode)
+                    return await response.ToResult<GetClientResponse>();
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async Task<IResult<int>> UpdateClient(UpdateClientRequest request)
+        {
+            try
+            {
+                var response = await _httpClient.PostAsJsonAsync(Routes.ClientsEndpoint.Update, request);
+
+                if (response.IsSuccessStatusCode)
+                    return await response.ToResult<int>();
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }

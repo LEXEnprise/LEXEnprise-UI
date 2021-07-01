@@ -10,5 +10,7 @@ namespace LEXEnprise.Blazor.Application.Services.Clients
         Task<PaginatedResult<GetClientResponse>> GetClients(GetClientsRequest request);
         Task<PaginatedResult<GetClientResponse>> GetFilteredClients(GetFilteredClientsRequest request);
         Task<IResult<int>> AddClient(AddClientRequest request);
+        Task<IResult<GetClientResponse>> Get(int clientId);
+        Task<IResult<int>> UpdateClient(UpdateClientRequest request);
     }
 }

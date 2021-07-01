@@ -11,6 +11,7 @@ using LEXEnprise.Blazor.Matters.Components.Lookup;
 using LEXEnprise.Blazor.Matters.Mapping;
 using LEXEnprise.Blazor.Matters.Validations;
 using LEXEnprise.Blazor.Matters.ViewModels;
+using LEXEnprise.Blazor.Shared.Enums;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System;
@@ -92,7 +93,17 @@ namespace LEXEnprise.Blazor.Matters.Pages
             {
                 CaseFolderId = _caseFolderData.Id,
                 ClientId = _caseFolderData.ClientId,
-                CaseFolderCode = _caseFolderData.CaseFolderCode
+                CaseFolderCode = _caseFolderData.CaseFolderCode,
+
+                StageAsOfDate = DateTime.Now,
+                FileDate = DateTime.Now,
+                ApplicationDate = DateTime.Now,
+                PublicationDate = DateTime.Now,
+                CertificateDate = DateTime.Now,
+                PCTApplicationDate = DateTime.Now,
+                PCTLanguageDate = DateTime.Now,
+                PCTPublicationDate = DateTime.Now,
+                PriorityDate = DateTime.Now,
             };
         }
 
@@ -110,7 +121,7 @@ namespace LEXEnprise.Blazor.Matters.Pages
             if (firstRender)
             {
                 _jsModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "/js/common.js");
-                _jsAddIpModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/LEXEnprise.Blazor.Matters/js/ipMatter.js");
+                //_jsAddIpModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/LEXEnprise.Blazor.Matters/js/ipMatter.js");
             }
         }
 
@@ -133,7 +144,7 @@ namespace LEXEnprise.Blazor.Matters.Pages
 
         private async Task GoTop() => await _jsModule.InvokeVoidAsync("OnScrollEvent");
 
-        private bool IsValidIPMatterEntries()
+        private bool IsValidHandlingLawyers()
         {
             _customValidation.ClearErrors();
             var errors = new Dictionary<string, List<string>>();
@@ -142,6 +153,22 @@ namespace LEXEnprise.Blazor.Matters.Pages
             {
                 errors.Add(nameof(_addIPMatterModel.HandlingLawyers),
                     new() { "Handling Lawyers is required" });
+            }
+            else
+            {
+                var mainLawyerCount = _addIPMatterModel.HandlingLawyers.Count(l => l.IsMainLawyer);
+
+                if (mainLawyerCount > 1)
+                {
+                    errors.Add(nameof(_addIPMatterModel.HandlingLawyers),
+                        new() { "There should be only one Main Handling Lawyer" });
+                }
+
+                if (mainLawyerCount == 0)
+                {
+                    errors.Add(nameof(_addIPMatterModel.HandlingLawyers),
+                        new() { "There should be one Main Handling Lawyer" });
+                }
             }
 
             if (errors.Count > 0)
@@ -155,7 +182,7 @@ namespace LEXEnprise.Blazor.Matters.Pages
 
         private async Task OnSubmitIPMatter()
         {
-            if (!IsValidIPMatterEntries())
+            if (!IsValidHandlingLawyers())
                 await GoTop();
             else
             {
@@ -217,12 +244,32 @@ namespace LEXEnprise.Blazor.Matters.Pages
             {
                 var selected = result.Data as Lawyer;
 
-                _addIPMatterModel.HandlingLawyers.Add(new MatterHandlingLawyer
+                if (_addIPMatterModel.HandlingLawyers.Any(l => l.LawyerId == selected.Id))
+                {
+                    _customValidation.ClearErrors();
+                    var errors = new Dictionary<string, List<string>>();
+
+                    errors.Add(nameof(_addIPMatterModel.HandlingLawyers),
+                        new() { "You are not allowed to add previously selected lawyer" });
+
+                    _customValidation.DisplayErrors(errors);
+                    await GoTop();
+                    return;
+                }
+
+                var handlingLawyer = new MatterHandlingLawyer
                 {
                     LawyerId = selected.Id,
-                    IsNew = true
-                }) ;
-                await _jsAddIpModule.InvokeVoidAsync("AddLawyerToRow", _handlingLawyersRowRef, selected.Fullname, selected.EmailAddress);
+                    IsMainLawyer = false,
+                    Action = DataActions.Add,
+                    HandlingLawyer = new Lawyer
+                    {
+                        Fullname = selected.Fullname,
+                        EmailAddress = selected.EmailAddress
+                    }
+                };
+
+                _addIPMatterModel.HandlingLawyers.Add(handlingLawyer) ;
             }
         }
 
@@ -230,6 +277,44 @@ namespace LEXEnprise.Blazor.Matters.Pages
         private void Cancel()
         {
             Navigator.NavigateTo($"caseFolder/{_caseFolderData.Id}");
+        }
+
+        private async Task CheckMainLawyer(MatterHandlingLawyer handlingLawyer)
+        {
+            _customValidation.ClearErrors();
+            var errors = new Dictionary<string, List<string>>();
+
+            if (!handlingLawyer.IsMainLawyer)
+            {
+                if (_addIPMatterModel.HandlingLawyers.Any(l => l.IsMainLawyer && l.LawyerId != handlingLawyer.LawyerId))
+                {
+                    handlingLawyer.IsMainLawyer = false;
+                    errors.Add(nameof(_addIPMatterModel.HandlingLawyers),
+                        new() { "You already have a selected Main Lawyer. There should be only 1 Main Lawyer" });
+
+                    _customValidation.DisplayErrors(errors);
+                    await GoTop();
+                    return;
+                }
+
+                handlingLawyer.IsMainLawyer = true;
+            }
+            else
+                handlingLawyer.IsMainLawyer = false;
+        }
+
+        private async Task DeleteLawyer(string lawyerName, int lawyerId)
+        {
+            //var confirmed = await JSRuntime.InvokeAsync<bool>("confirm", $"Are you sure you want to delete this lawyer - {lawyerName}?");
+
+            //if (confirmed)
+            //{
+
+            //}
+            var lawyerToDelete = _addIPMatterModel.HandlingLawyers.FirstOrDefault(l => l.LawyerId == lawyerId);
+
+            if (lawyerToDelete != null)
+                _addIPMatterModel.HandlingLawyers.Remove(lawyerToDelete);
         }
 
         public void Dispose() => Interceptor.DisposeEvent();

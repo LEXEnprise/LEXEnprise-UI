@@ -1,6 +1,6 @@
-﻿@page "/addclient"
+﻿@page "/updateclient/{clientid:int}"
 @using LEXEnprise.Blazor.Shared.Components
-@using LEXEnprise.Blazor.Clients.Validations 
+@using LEXEnprise.Blazor.Clients.Validations
 
 @attribute [Authorize(Roles = "MISStaff, Paralegal, Lawyer")]
 
@@ -8,11 +8,11 @@
 <MainContent>
     <div class="row">
         <div class="col-md-12">
-            <EditForm Model="_addClientModel" OnValidSubmit="OnValidSubmit" OnInvalidSubmit="OnInvalidClientSubmit">
+            <EditForm Model="_updateClientModel" OnValidSubmit="OnValidSubmit" OnInvalidSubmit="OnInvalidClientSubmit">
                 <div class="card">
                     <div class="card-body">
                         <DataAnnotationsValidator />
-                        <AddClientCustomValidation @ref="_addClientValidation" />
+                        <AddClientCustomValidation @ref="_updateClientValidation" />
                         <ValidationSummary />
                         <div class="row">
                             <div class="col-md-6">
@@ -27,13 +27,17 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="form-group">
+                                            <label for="clientNumber">Client Number</label>
+                                            <InputText @bind-Value="_updateClientModel.ClientNumber" class="form-control" disabled />
+                                        </div>
+                                        <div class="form-group">
                                             <label for="clientName">Client Name</label>
-                                            <InputText id="@_clientNameId" @bind-Value="_addClientModel.ClientName" class="form-control" placeholder="Client Name" />
-                                            <ValidationMessage For="@(() => _addClientModel.ClientName)" />
+                                            <InputText id="@_clientNameId" @bind-Value="_updateClientModel.ClientName" class="form-control" placeholder="Client Name" />
+                                            <ValidationMessage For="@(() => _updateClientModel.ClientName)" />
                                         </div>
                                         <div class="form-group">
                                             <label for="clientType">Client Type</label>
-                                            <InputSelect @bind-Value="_addClientModel.ClientTypeId" class="form-control" placeholder="Client Type">
+                                            <InputSelect @bind-Value="_updateClientModel.ClientTypeId" class="form-control" placeholder="Client Type">
                                                 <option value="0">Select</option>
 
                                                 @foreach (var clientType in ClientTypes)
@@ -44,13 +48,17 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="industry">Industry</label>
-                                            <InputSelect @bind-Value="_addClientModel.ClientIndustryId" class="form-control" placeholder="Industry">
+                                            <InputSelect @bind-Value="_updateClientModel.ClientIndustryId" class="form-control" placeholder="Industry">
                                                 <option value="0">Select</option>
                                                 @foreach (var industry in Industries)
                                                 {
                                                     <option value="@industry.Id">@industry.IndustryName</option>
                                                 }
                                             </InputSelect>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="clientStatus">Status</label>
+                                            <InputText id="@_clientNameId" @bind-Value="_updateClientModel.Status.Status" class="form-control" disabled />
                                         </div>
                                     </div>
                                 </div>
@@ -68,18 +76,18 @@
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label for="email">Email Address</label>
-                                            <InputText @bind-Value="_addClientModel.Email" class="form-control" placeholder="Email Address" />
-                                            <ValidationMessage For="@(() => _addClientModel.Email)" />
+                                            <InputText @bind-Value="_updateClientModel.Email" class="form-control" placeholder="Email Address" />
+                                            <ValidationMessage For="@(() => _updateClientModel.Email)" />
                                         </div>
                                         <div class="form-group">
                                             <label for="phoneNumber">Phone Number</label>
-                                            <InputText @bind-Value="_addClientModel.PhoneNumber" class="form-control" placeholder="Phone Number" />
-                                            <ValidationMessage For="@(() => _addClientModel.PhoneNumber)" />
+                                            <InputText @bind-Value="_updateClientModel.PhoneNumber" class="form-control" placeholder="Phone Number" />
+                                            <ValidationMessage For="@(() => _updateClientModel.PhoneNumber)" />
                                         </div>
                                         <div class="form-group">
                                             <label for="mobileNumber">Mobile Number</label>
-                                            <InputText @bind-Value="_addClientModel.MobileNumber" class="form-control" placeholder="Mobile Number" />
-                                            <ValidationMessage For="@(() => _addClientModel.MobileNumber)" />
+                                            <InputText @bind-Value="_updateClientModel.MobileNumber" class="form-control" placeholder="Mobile Number" />
+                                            <ValidationMessage For="@(() => _updateClientModel.MobileNumber)" />
                                         </div>
 
                                     </div>
@@ -98,17 +106,17 @@
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label for="address1">Address 1</label>
-                                            <InputText @bind-Value="_addClientModel.Address1" class="form-control" placeholder="Address 1" />
-                                            <ValidationMessage For="@(() => _addClientModel.Address1)" />
+                                            <InputText @bind-Value="_updateClientModel.Address1" class="form-control" placeholder="Address 1" />
+                                            <ValidationMessage For="@(() => _updateClientModel.Address1)" />
                                         </div>
                                         <div class="form-group">
                                             <label for="address2">Address 2</label>
-                                            <InputText @bind-Value="_addClientModel.Address2" class="form-control" placeholder="Address 2" />
-                                            <ValidationMessage For="@(() => _addClientModel.Address2)" />
+                                            <InputText @bind-Value="_updateClientModel.Address2" class="form-control" placeholder="Address 2" />
+                                            <ValidationMessage For="@(() => _updateClientModel.Address2)" />
                                         </div>
                                         <div class="form-group">
                                             <label for="country">Country</label>
-                                            <select value="@_addClientModel.CountryId" @onchange="OnChangeCountry" class="form-control" placeholder="Country">
+                                            <select value="@_updateClientModel.CountryId" @onchange="OnChangeCountry" class="form-control" placeholder="Country">
                                                 <option value="0">Select</option>
                                                 @foreach (var country in Countries)
                                                 {
@@ -118,7 +126,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="state">State/Province</label>
-                                            <select id="@_selectStatesId" value="@_addClientModel.StateId" @onchange="OnChangeState" class="form-control" placeholder="State/Province">
+                                            <select id="@_selectStatesId" value="@_updateClientModel.StateId" @onchange="OnChangeState" class="form-control" placeholder="State/Province">
                                                 <option value="0">Select</option>
                                                 @foreach (var state in States)
                                                 {
@@ -128,7 +136,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="city">City</label>
-                                            <InputSelect id="@_selectCitiesId" @bind-Value="_addClientModel.CityId" class="form-control" placeholder="City">
+                                            <InputSelect id="@_selectCitiesId" @bind-Value="_updateClientModel.CityId" class="form-control" placeholder="City">
                                                 <option value="0">Select</option>
                                                 @foreach (var city in Cities)
                                                 {
@@ -138,8 +146,8 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="zipCode">ZipCode</label>
-                                            <InputText @bind-Value="_addClientModel.ZipCode" class="form-control" placeholder="ZipCode" />
-                                            <ValidationMessage For="@(() => _addClientModel.ZipCode)" />
+                                            <InputText @bind-Value="_updateClientModel.ZipCode" class="form-control" placeholder="ZipCode" />
+                                            <ValidationMessage For="@(() => _updateClientModel.ZipCode)" />
                                         </div>
                                     </div>
                                 </div>
@@ -157,21 +165,21 @@
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label for="website">Web-Site</label>
-                                            <InputText @bind-Value="_addClientModel.Website" class="form-control" placeholder="Web-Site" />
-                                            <ValidationMessage For="@(() => _addClientModel.Website)" />
+                                            <InputText @bind-Value="_updateClientModel.Website" class="form-control" placeholder="Web-Site" />
+                                            <ValidationMessage For="@(() => _updateClientModel.Website)" />
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <label>Date Acquired</label>
-                                                    <InputDate @bind-Value="_addClientModel.DateAcquired" class="form-control" placeholder="Date Acquired" />
-                                                    <ValidationMessage For="@(() => _addClientModel.DateAcquired)" />
+                                                    <InputDate @bind-Value="_updateClientModel.DateAcquired" class="form-control" placeholder="Date Acquired" />
+                                                    <ValidationMessage For="@(() => _updateClientModel.DateAcquired)" />
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <label for="category">Category</label>
-                                                    <InputSelect @bind-Value="_addClientModel.ClientCategoryId" class="form-control" placeholder="Category">
+                                                    <InputSelect @bind-Value="_updateClientModel.ClientCategoryId" class="form-control" placeholder="Category">
                                                         <option value="0">Select</option>
                                                         @foreach (var category in Categories)
                                                         {
@@ -183,7 +191,7 @@
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <label for="billingCurrency">Billing Currency</label>
-                                                    <InputSelect @bind-Value="_addClientModel.BillingCurrencyId" class="form-control" placeholder="Billing Currency">
+                                                    <InputSelect @bind-Value="_updateClientModel.BillingCurrencyId" class="form-control" placeholder="Billing Currency">
                                                         <option value="0">Select</option>
                                                         @foreach (var currency in Currencies)
                                                         {
@@ -195,8 +203,8 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="remarks">Remarks</label>
-                                            <InputTextArea @bind-Value="_addClientModel.Remarks" class="form-control" rows="10" placeholder="Remarks - (1000 Characters limit.)" />
-                                            <ValidationMessage For="@(() => _addClientModel.Remarks)" />
+                                            <InputTextArea @bind-Value="_updateClientModel.Remarks" class="form-control" rows="10" placeholder="Remarks - (1000 Characters limit.)" />
+                                            <ValidationMessage For="@(() => _updateClientModel.Remarks)" />
                                         </div>
                                     </div>
                                 </div>
@@ -235,12 +243,13 @@
                                                     <th>Position</th>
                                                     <th>Is Main Officer?</th>
                                                     <th></th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody @ref="_clientContactsRowRef" style="font-size: 12px !important;">
-                                                @if (_addClientModel.Contacts.Count > 0)
+                                                @if (_updateClientModel.Contacts.Count > 0)
                                                 {
-                                                    foreach (var contact in _addClientModel.Contacts)
+                                                    foreach (var contact in _updateClientModel.Contacts)
                                                     {
                                                 <tr>
                                                     <td class="align-middle">@contact.ContactPerson</td>
@@ -256,6 +265,11 @@
                                                     {
                                                         <td class="align-middle">No</td>
                                                     }
+                                                    <td class="align-middle">
+                                                        <a href="#" class="nav-link" @onclick="() => ShowUpdateContactModal(contact)" @onclick:preventDefault>
+                                                            <i class="nav-icon fas fa-edit"></i>
+                                                        </a>
+                                                    </td>
                                                     <td class="align-middle">
                                                         <a href="#" class="nav-link" @onclick="() => DeleteContact(contact.Email)" @onclick:preventDefault>
                                                             <i class="nav-icon fas fa-trash"></i>

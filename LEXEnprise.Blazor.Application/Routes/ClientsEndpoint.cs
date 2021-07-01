@@ -18,11 +18,12 @@ namespace LEXEnprise.Blazor.Application.Routes
             searchString = searchString ?? "*";
             sortString = sortString ?? "ClientName";
 
-            return $"v1/clients?pageNumber={pageNumber}&pageSize={pageSize}&searchString={searchString}&sortString={sortString}";
+            return $"v1/clients/getpaged?pageNumber={pageNumber}&pageSize={pageSize}&searchString={searchString}&sortString={sortString}";
         }
 
         public static string FilteredPaged = "v1/clients/getclients";
         public static string Add = "v1/clients/addclient";
+        public static string Get = "v1/clients/getclient";
         public static string Delete = "v1/clients/delete";
         public static string Update = "v1/clients/update";
 
@@ -39,9 +40,10 @@ namespace LEXEnprise.Blazor.Application.Routes
         //}
 
         //public static string FilteredPaged = "clients-service/filterclients";
-        //public static string Add = "clients/add";
-        //public static string Delete = "clients/delete";
-        //public static string Update = "clients/update";
+        //public static string Add = "clients-service/add";
+        //public static string Get = "clients-service/getclient";
+        //public static string Delete = "clients-service/delete";
+        //public static string Update = "clients-service/update";
 
     }
 }

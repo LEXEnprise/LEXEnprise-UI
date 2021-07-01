@@ -22,12 +22,6 @@ namespace LEXEnprise.Blazor.Clients.Components
         [Inject]
         public IJSRuntime Js { get; set; }
 
-        private void RedirectToUpdate(int id)
-        {
-            var url = Path.Combine("updateClient/", id.ToString());
-            NavigationManager.NavigateTo(url);
-        }
-
         //we use the Js property and the InvokeAsync method to call the confirm JavaScript function and 
         //pass a parameter to that function.If a user confirms the delete action, we invoke our event callback parameter 
         //and execute the method from the parent component.
@@ -37,6 +31,7 @@ namespace LEXEnprise.Blazor.Clients.Components
 
             //Js is IJSRuntime from Microsoft.JSInterop, Js.InvokeAsync to call a javascript "confirm" function.
             var confirmed = await Js.InvokeAsync<bool>("confirm", $"Are you sure you want to delete {client.ClientName} client?");
+            
             if (confirmed)
             {
                 await OnDeleted.InvokeAsync(id);
